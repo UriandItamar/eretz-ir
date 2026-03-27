@@ -26,12 +26,13 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);min-he
 .btn:active{transform:scale(.98)}
 .btn-p{background:var(--green);color:#fff;border-color:var(--green)}
 .btn-p:hover{background:var(--gd);border-color:var(--gd)}
+.btn-p:disabled{background:#aaa;border-color:#aaa;cursor:not-allowed}
 .btn-sm{padding:7px 13px;font-size:13px;width:auto}
 .btn-gold{background:var(--gold);color:#fff;border-color:var(--gold);font-size:17px;padding:14px 20px}
 .btn-gold:hover{background:#e0941a}
 .btn-skip{color:var(--mut);background:transparent;border-color:var(--brd);font-size:14px}
 .btn-lang{padding:8px 16px;font-size:14px;border-radius:20px;width:auto}
-.btn-lang.active{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-lang.on{background:var(--green);color:#fff;border-color:var(--green)}
 input[type=text],select{width:100%;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--brd);font-size:15px;font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);outline:none;transition:border .15s}
 input[type=text]:focus,select:focus{border-color:var(--green);background:#fff}
 .ilabel{font-size:13px;color:var(--mut);margin-bottom:5px}
@@ -56,7 +57,7 @@ input[type=text]:focus,select:focus{border-color:var(--green);background:#fff}
 .ring-bg{fill:none;stroke:#eee;stroke-width:10}
 .ring-fg{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke .4s}
 .ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900}
-.bonus{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:700;transition:all .4s}
+.bonus{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:700}
 .b2{background:var(--goldl);color:var(--gold)}
 .b1{background:var(--gl);color:var(--gd)}
 .ans-area{padding:12px 15px 20px;max-width:580px;margin:0 auto;width:100%}
@@ -65,11 +66,6 @@ input[type=text]:focus,select:focus{border-color:var(--green);background:#fff}
 .a-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:var(--rs);background:var(--bg);font-size:14px;margin-bottom:5px}
 .a-cat{color:var(--mut);width:90px;flex-shrink:0;font-size:13px}
 .a-val{flex:1;font-weight:600}
-.pchip{padding:2px 9px;border-radius:10px;font-size:12px;font-weight:700}
-.p3{background:#FFF3CD;color:#856404}
-.p2{background:var(--goldl);color:var(--gold)}
-.p1{background:var(--gl);color:var(--gd)}
-.p0{background:#f0f0f0;color:var(--mut)}
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
 th{text-align:right;font-size:11px;color:var(--mut);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--brd)}
@@ -91,12 +87,12 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
 .spin{animation:spin 1s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .code-big{font-size:36px;font-weight:900;letter-spacing:8px;color:var(--pd);background:var(--pl);padding:16px 24px;border-radius:var(--r);text-align:center;margin-bottom:12px}
-.wd{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1s infinite}
+.wd{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);animation:wp 1s infinite}
 .wd:nth-child(2){animation-delay:.2s}.wd:nth-child(3){animation-delay:.4s}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
-.ready-chip{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700}
+@keyframes wp{0%,100%{opacity:.3}50%{opacity:1}}
+.rc{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700}
 .ry{background:var(--gl);color:var(--gd)}.rn2{background:#f0f0f0;color:var(--mut)}
-.unique-badge{background:#FFF3CD;color:#856404;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.ubadge{background:#FFF3CD;color:#856404;padding:2px 6px;border-radius:8px;font-size:10px;font-weight:700}
 @media(max-width:400px){.sr{flex-direction:column}.cat-nm{font-size:26px}}
 </style>
 </head>
@@ -109,20 +105,19 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
     <div class="card tc" style="padding:24px 20px 20px">
       <div style="font-size:48px;margin-bottom:8px">🌍</div>
       <div style="font-size:22px;font-weight:900;margin-bottom:16px">ארץ עיר</div>
-      <!-- Language selector -->
       <div style="display:flex;justify-content:center;gap:8px;margin-bottom:16px">
-        <button class="btn btn-lang active" id="lang-he" onclick="setLang('he')">🇮🇱 עברית</button>
+        <button class="btn btn-lang on" id="lang-he" onclick="setLang('he')">🇮🇱 עברית</button>
         <button class="btn btn-lang" id="lang-en" onclick="setLang('en')">🇺🇸 English</button>
       </div>
       <div style="margin-bottom:12px">
         <div class="ilabel" id="lbl-name">השם שלך</div>
         <input type="text" id="myname" placeholder="הכנס את שמך..." maxlength="20"/>
       </div>
-      <button class="btn btn-p mb8" id="btn-create" onclick="createRoom()">צור חדר חדש</button>
+      <button class="btn btn-p mb8" onclick="createRoom()">🏠 <span id="btn-create-txt">צור חדר חדש</span></button>
       <div style="margin:10px 0;font-size:13px;color:var(--mut)">— או —</div>
       <div class="ar" style="margin-bottom:0">
         <input type="text" id="joincode" placeholder="קוד חדר..." maxlength="4" style="text-transform:uppercase;letter-spacing:3px;text-align:center;font-weight:700;font-size:18px"/>
-        <button class="btn btn-p btn-sm" id="btn-join" onclick="joinRoom()">הצטרף</button>
+        <button class="btn btn-p btn-sm" onclick="joinRoom()" id="btn-join-txt">הצטרף</button>
       </div>
       <div id="home-err" class="err tc"></div>
     </div>
@@ -130,49 +125,52 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
       <strong>⚡ ניקוד:</strong><br>
       ענית נכון תוך 10 שניות ← <strong style="color:var(--gold)">2 נקודות</strong><br>
       ענית נכון אחרי 10 שניות ← <strong style="color:var(--green)">1 נקודה</strong><br>
-      רק אתה ענית את התשובה ← <strong style="color:#856404">+1 בונוס ייחודי!</strong>
+      רק אתה ענית ← <strong style="color:#856404">+1 בונוס ייחודי ⭐</strong>
     </div>
   </div>
 </div>
 
 <!-- LOBBY -->
 <div class="page" id="pg-lobby">
-  <div class="hdr"><div class="hdr-t" id="lbl-lobby">🏠 לובי</div></div>
+  <div class="hdr"><div class="hdr-t">🏠 לובי</div></div>
   <div class="main">
     <div class="card tc">
-      <div class="mut mb8" id="lbl-share">שתפו את הקוד עם החברים</div>
+      <div class="mut mb8">שתפו את הקוד עם החברים</div>
       <div class="code-big" id="room-code">----</div>
-      <div class="mut" style="font-size:12px" id="lbl-share2">החברים יפתחו את אותו הקישור ויכניסו את הקוד</div>
+      <div class="mut" style="font-size:12px">פתחו את אותו הקישור והכניסו את הקוד</div>
     </div>
     <div class="card">
-      <div class="ct" id="lbl-players">שחקנים מחוברים</div>
-      <div id="lobby-players"></div>
+      <div class="ct">שחקנים מחוברים</div>
+      <div id="lobby-players"><div class="mut">טוען...</div></div>
     </div>
-    <!-- HOST settings -->
-    <div class="card" id="host-settings" style="display:none">
-      <div class="ct" id="lbl-cats">קטגוריות</div>
-      <div style="font-size:12px;color:var(--mut);margin-bottom:8px" id="catcnt"></div>
-      <div class="chips" id="chips"></div>
-      <div class="mut mb8" style="font-size:12px" id="lbl-chip-hint">לחץ לבחירה/ביטול · ✕ למחיקה</div>
-      <div class="ar">
-        <input type="text" id="catnew" maxlength="20" onkeydown="if(event.key==='Enter')addCat()"/>
-        <button class="btn btn-p btn-sm" onclick="addCat()" id="btn-addcat">+ הוסף</button>
-      </div>
-      <div class="presets" id="presets"></div>
-      <div style="height:16px"></div>
-      <div class="sr mb12">
-        <div><div class="ilabel" id="lbl-rounds">סבבים</div>
-          <select id="rnds"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+    <div id="host-area" style="display:none">
+      <div class="card">
+        <div class="ct">קטגוריות</div>
+        <div style="font-size:12px;color:var(--mut);margin-bottom:8px" id="catcnt"></div>
+        <div class="chips" id="chips"></div>
+        <div class="mut mb8" style="font-size:12px">לחץ לבחירה/ביטול · ✕ למחיקה</div>
+        <div class="ar">
+          <input type="text" id="catnew" placeholder="הוסף קטגוריה..." maxlength="20" onkeydown="if(event.key==='Enter')addCat()"/>
+          <button class="btn btn-p btn-sm" onclick="addCat()">+ הוסף</button>
         </div>
-        <div><div class="ilabel" id="lbl-time">זמן לקטגוריה</div>
-          <select id="tsec"><option value="20">20s</option><option value="30" selected>30s</option><option value="45">45s</option><option value="60">60s</option></select>
-        </div>
+        <div class="presets" id="presets"></div>
       </div>
-      <button class="btn btn-p" id="start-btn" onclick="hostStartGame()">התחל משחק ↗</button>
+      <div class="card">
+        <div class="ct">הגדרות</div>
+        <div class="sr mb12">
+          <div><div class="ilabel">סבבים</div>
+            <select id="rnds"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+          </div>
+          <div><div class="ilabel">זמן לקטגוריה</div>
+            <select id="tsec"><option value="20">20s</option><option value="30" selected>30s</option><option value="45">45s</option><option value="60">60s</option></select>
+          </div>
+        </div>
+        <button class="btn btn-p" id="start-btn" onclick="startGame()">התחל משחק ↗</button>
+        <div id="start-err" class="err tc"></div>
+      </div>
     </div>
-    <!-- GUEST waiting -->
-    <div class="card tc" id="guest-waiting" style="display:none">
-      <div style="font-size:14px;color:var(--mut);margin-bottom:10px" id="lbl-wait-host">ממתין למארח להתחיל...</div>
+    <div class="card tc" id="guest-area" style="display:none">
+      <div class="mut" style="margin-bottom:10px">ממתין למארח להתחיל...</div>
       <div><span class="wd"></span> <span class="wd"></span> <span class="wd"></span></div>
     </div>
   </div>
@@ -193,26 +191,27 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
       </svg>
       <div class="ring-num" id="rnum">30</div>
     </div>
-    <div class="bonus b2" id="bonusbadge"></div>
+    <div class="bonus b2" id="bonusbadge">⚡ ענה עכשיו = 2 נקודות!</div>
   </div>
   <div class="ans-area">
-    <input type="text" class="big-inp" id="ansinp" autocomplete="off" autocorrect="off" autocapitalize="off" onkeydown="if(event.key==='Enter')submitAns()"/>
-    <button class="btn btn-gold" id="btn-done" onclick="submitAns()">סיימתי ✓</button>
-    <button class="btn btn-skip" id="btn-skip" style="margin-top:8px" onclick="skipCat()">דלג →</button>
+    <input type="text" class="big-inp" id="ansinp" placeholder="כתוב תשובה..." autocomplete="off" autocorrect="off" autocapitalize="off" onkeydown="if(event.key==='Enter')submitAns()"/>
+    <button class="btn btn-gold" onclick="submitAns()">סיימתי ✓</button>
+    <button class="btn btn-skip" style="margin-top:8px" onclick="skipCat()">דלג →</button>
   </div>
 </div>
 
-<!-- WAITING FOR OTHERS -->
+<!-- WAITING -->
 <div class="page" id="pg-waiting">
-  <div class="hdr"><div class="hdr-t" id="wait-title"></div></div>
+  <div class="hdr"><div class="hdr-t" id="wait-title">ממתין...</div></div>
   <div class="main">
     <div class="card tc" style="padding:30px">
-      <div style="font-size:13px;color:var(--mut);margin-bottom:10px" id="lbl-saved">התשובה שלך נשמרה ✓</div>
-      <div style="font-size:16px;font-weight:600;margin-bottom:16px" id="lbl-waiting-others">ממתין לשאר השחקנים...</div>
+      <div style="font-size:36px;margin-bottom:12px">✅</div>
+      <div style="font-size:16px;font-weight:600;margin-bottom:6px">התשובות שלך נשמרו!</div>
+      <div class="mut" style="margin-bottom:16px">ממתין לשאר השחקנים...</div>
       <div><span class="wd"></span> <span class="wd"></span> <span class="wd"></span></div>
     </div>
     <div class="card">
-      <div class="ct" id="lbl-status">סטטוס שחקנים</div>
+      <div class="ct">סטטוס שחקנים</div>
       <div id="wait-players"></div>
     </div>
   </div>
@@ -220,55 +219,56 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
 
 <!-- CHECKING -->
 <div class="page" id="pg-checking">
-  <div class="hdr"><div class="hdr-t" id="lbl-checking">בודק תשובות...</div></div>
+  <div class="hdr"><div class="hdr-t">בודק תשובות...</div></div>
   <div class="main">
     <div class="card tc" style="padding:40px 20px">
       <div style="font-size:40px;margin-bottom:16px" class="spin">⚙️</div>
-      <div style="font-size:16px;font-weight:600;margin-bottom:6px" id="lbl-ai-check">ה-AI בודק את הסבב</div>
-      <div class="mut">מעריך כל תשובה לפי האות <strong id="chkltr"></strong></div>
+      <div style="font-size:16px;font-weight:600;margin-bottom:6px">ה-AI בודק את הסבב</div>
+      <div class="mut">האות: <strong id="chkltr"></strong></div>
     </div>
   </div>
 </div>
 
-<!-- ROUND RESULTS -->
+<!-- RESULTS -->
 <div class="page" id="pg-results">
-  <div class="hdr"><div class="hdr-t" id="restitle"></div></div>
+  <div class="hdr"><div class="hdr-t" id="restitle">תוצאות</div></div>
   <div class="main">
     <div class="card">
-      <div class="ct" id="res-answers-title"></div>
+      <div class="ct" id="res-sub"></div>
       <div class="tbl-wrap"><table id="restbl"></table></div>
     </div>
     <div class="card">
-      <div class="ct" id="lbl-score">ניקוד מצטבר</div>
+      <div class="ct">ניקוד מצטבר</div>
       <div id="scoreboard"></div>
     </div>
-    <!-- HOST: next round button -->
-    <button class="btn btn-p" id="nxtbtn" onclick="nextRound()" style="margin-bottom:13px;display:none"></button>
-    <!-- GUEST: wait -->
-    <div class="card tc" id="guest-next" style="display:none">
-      <div class="mut" id="lbl-wait-next">ממתין למארח להתחיל את הסבב הבא...</div>
+    <button class="btn btn-p" id="nxtbtn" style="display:none;margin-bottom:13px" onclick="nextRound()"></button>
+    <div class="card tc" id="guest-wait-next" style="display:none">
+      <div class="mut">ממתין למארח להתחיל את הסבב הבא...</div>
+      <div style="margin-top:10px"><span class="wd"></span> <span class="wd"></span> <span class="wd"></span></div>
     </div>
-  </div>
-</div>
-
-<!-- FULL SUMMARY -->
-<div class="page" id="pg-summary">
-  <div class="hdr"><div class="hdr-t" id="lbl-summary">סיכום המשחק</div></div>
-  <div class="main">
-    <div id="summary-rounds"></div>
-    <button class="btn" onclick="go('final')" style="margin-bottom:13px" id="btn-to-final">לתוצאות הסופיות ↗</button>
   </div>
 </div>
 
 <!-- FINAL -->
 <div class="page" id="pg-final">
-  <div class="hdr"><div class="hdr-t" id="lbl-final">🏆 תוצאות סופיות</div></div>
+  <div class="hdr"><div class="hdr-t">🏆 תוצאות סופיות</div></div>
   <div class="main">
     <div class="win-card" id="wincard"></div>
-    <div class="card"><div class="ct" id="lbl-scoretable">טבלת ניקוד</div><div id="finalboard"></div></div>
-    <button class="btn btn-p mb12" id="btn-summary" onclick="go('summary')" style="display:none">סיכום תשובות המשחק</button>
+    <div class="card"><div class="ct">טבלת ניקוד</div><div id="finalboard"></div></div>
+    <button class="btn btn-p mb12" id="btn-summary" onclick="go('summary')" style="display:none">📋 סיכום כל התשובות</button>
     <button class="btn btn-p mb12" id="again-btn" onclick="playAgain()" style="display:none">שחק שוב ↗</button>
-    <button class="btn" id="btn-home" onclick="go('home')">חזור לתפריט</button>
+    <button class="btn" onclick="go('home')">חזור לתפריט</button>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="page" id="pg-summary">
+  <div class="hdr">
+    <div class="hdr-t">📋 סיכום המשחק</div>
+    <button class="btn btn-sm" onclick="go('final')">← חזור</button>
+  </div>
+  <div class="main">
+    <div id="summary-content"></div>
   </div>
 </div>
 
@@ -279,270 +279,225 @@ const SUPA_KEY='sb_publishable_tPdbBFmcSWtOamNIMs07rg_37j_Bi3H';
 const sb=supabase.createClient(SUPA_URL,SUPA_KEY);
 const AI_API='https://api.anthropic.com/v1/messages';
 const CIRC=2*Math.PI*48;
-const BONUS_SECS=10;
+const BONUS=10;
 const AVC=[['#EEEDFE','#3C3489'],['#E1F5EE','#085041'],['#FAECE7','#712B13'],['#E6F1FB','#0C447C'],['#FAEEDA','#633806'],['#FCEBEB','#791F1F'],['#EAF3DE','#27500A'],['#FBEAF0','#72243E']];
+const HE_LETTERS='אבגדהוזחטיכלמנסעפצקרשת'.split('');
+const EN_LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-const LANGS={
-  he:{
-    name:'השם שלך',create:'צור חדר חדש',join:'הצטרף',share:'שתפו את הקוד עם החברים',
-    share2:'החברים יפתחו את אותו הקישור ויכניסו את הקוד',players:'שחקנים מחוברים',
-    cats:'קטגוריות',chipHint:'לחץ לבחירה/ביטול · ✕ למחיקה',addCat:'הוסף קטגוריה...',
-    rounds:'סבבים',time:'זמן לקטגוריה',start:'התחל משחק ↗',waitHost:'ממתין למארח להתחיל...',
-    saved:'התשובה שלך נשמרה ✓',waitingOthers:'ממתין לשאר השחקנים...',status:'סטטוס שחקנים',
-    checking:'בודק תשובות...',aiCheck:'ה-AI בודק את הסבב',score:'ניקוד מצטבר',
-    waitNext:'ממתין למארח להתחיל את הסבב הבא...',summary:'סיכום המשחק',
-    toFinal:'לתוצאות הסופיות ↗',finalTitle:'🏆 תוצאות סופיות',scoreTable:'טבלת ניקוד',
-    summaryBtn:'סיכום תשובות המשחק',playAgain:'שחק שוב ↗',home:'חזור לתפריט',
-    done:'סיימתי ✓',skip:'דלג →',lobby:'🏠 לובי',
-    scoreInfo:'<strong>⚡ ניקוד:</strong><br>ענית נכון תוך 10 שניות ← <strong style="color:var(--gold)">2 נקודות</strong><br>ענית נכון אחרי 10 שניות ← <strong style="color:var(--green)">1 נקודה</strong><br>רק אתה ענית ← <strong style="color:#856404">+1 בונוס ייחודי!</strong>',
-    bonusNow:'⚡ ענה עכשיו = 2 נקודות!',bonusLeft:'s לבונוס)',bonusAfter:'✓ עדיין מקבלים נקודה — ענו!',
-    nextRound:'סבב {n} ↗',finalResults:'תוצאות סופיות ↗',roundResults:'תוצאות סבב {n}',
-    answers:'תשובות — האות:',connected:'מחובר',finished:'סיים ✓',waiting:'ממתין...',
-    unique:'ייחודי!',placeholder:'כתוב תשובה...',
-    defaultCats:['ארץ','עיר','חי','צומח','דומם','שם פרטי','שם משפחה','מקצוע'],
-    presetCats:['פרי','ירק','צבע','סרט','זמר','ספורטאי','אוכל','ים','הר','נהר','רחוב','כלי נגינה','בגד','פרח','חרק','ספר','שחקן','מדינה','מטבח','ריהוט'],
-    letters:'אבגדהוזחטיכלמנסעפצקרשת'.split(''),
-    dir:'rtl',
-    summaryRound:'סבב {n} — האות:',catCol:'קטגוריה',totalCol:'סה"כ',roundPts:'נקודות סבב'
-  },
-  en:{
-    name:'Your name',create:'Create new room',join:'Join',share:'Share this code with friends',
-    share2:'Friends open the same link and enter the code',players:'Connected players',
-    cats:'Categories',chipHint:'Click to select/deselect · ✕ to remove',addCat:'Add category...',
-    rounds:'Rounds',time:'Time per category',start:'Start game ↗',waitHost:'Waiting for host to start...',
-    saved:'Your answer was saved ✓',waitingOthers:'Waiting for other players...',status:'Player status',
-    checking:'Checking answers...',aiCheck:'AI is checking the round',score:'Total score',
-    waitNext:'Waiting for host to start next round...',summary:'Game Summary',
-    toFinal:'Final results ↗',finalTitle:'🏆 Final results',scoreTable:'Scoreboard',
-    summaryBtn:'Full answers summary',playAgain:'Play again ↗',home:'Back to menu',
-    done:'Done ✓',skip:'Skip →',lobby:'🏠 Lobby',
-    scoreInfo:'<strong>⚡ Scoring:</strong><br>Correct within 10 seconds ← <strong style="color:var(--gold)">2 points</strong><br>Correct after 10 seconds ← <strong style="color:var(--green)">1 point</strong><br>Only you answered it ← <strong style="color:#856404">+1 unique bonus!</strong>',
-    bonusNow:'⚡ Answer now = 2 points!',bonusLeft:'s for bonus)',bonusAfter:'✓ Still get a point — answer!',
-    nextRound:'Round {n} ↗',finalResults:'Final results ↗',roundResults:'Round {n} results',
-    answers:'Answers — Letter:',connected:'Connected',finished:'Done ✓',waiting:'Waiting...',
-    unique:'Unique!',placeholder:'Type your answer...',
-    defaultCats:['Country','City','Animal','Plant','Object','First name','Last name','Profession'],
-    presetCats:['Fruit','Vegetable','Color','Movie','Singer','Athlete','Food','Sea','Mountain','River','Street','Instrument','Clothing','Flower','Insect','Book','Actor','Country','Cuisine','Furniture'],
-    letters:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
-    dir:'ltr',
-    summaryRound:'Round {n} — Letter:',catCol:'Category',totalCol:'Total',roundPts:'Round points'
+let lang='he';
+let G={
+  myName:'',roomId:'',playerId:'',isHost:false,
+  selCats:['ארץ','עיר','חי','צומח'],
+  round:0,totalRounds:3,tlimit:30,letter:'',
+  catIdx:0,catAns:{},results:{},scores:{},
+  tint:null,tleft:0,players:[],
+  allRoundsData:[],pollInt:null
+};
+
+const e=id=>document.getElementById(id);
+const go=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));e('pg-'+id).classList.add('active');window.scrollTo(0,0)};
+const genCode=()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:4},()=>c[Math.floor(Math.random()*c.length)]).join('')};
+const randLetter=()=>(lang==='he'?HE_LETTERS:EN_LETTERS)[Math.floor(Math.random()*(lang==='he'?HE_LETTERS.length:EN_LETTERS.length))];
+
+const setLang=l=>{
+  lang=l;
+  e('lang-he').classList.toggle('on',l==='he');
+  e('lang-en').classList.toggle('on',l==='en');
+  document.documentElement.setAttribute('dir',l==='he'?'rtl':'ltr');
+  if(l==='en'){
+    G.selCats=['Country','City','Animal','Plant'];
+    e('score-info').innerHTML='<strong>⚡ Scoring:</strong><br>Answer correctly in 10s ← <strong style="color:var(--gold)">2 points</strong><br>Answer correctly after 10s ← <strong style="color:var(--green)">1 point</strong><br>Only you answered ← <strong style="color:#856404">+1 unique bonus ⭐</strong>';
+  } else {
+    G.selCats=['ארץ','עיר','חי','צומח'];
+    e('score-info').innerHTML='<strong>⚡ ניקוד:</strong><br>ענית נכון תוך 10 שניות ← <strong style="color:var(--gold)">2 נקודות</strong><br>ענית נכון אחרי 10 שניות ← <strong style="color:var(--green)">1 נקודה</strong><br>רק אתה ענית ← <strong style="color:#856404">+1 בונוס ייחודי ⭐</strong>';
   }
 };
 
-let lang='he';
-let L=LANGS.he;
-
-let G={
-  myName:'',roomId:'',playerId:'',isHost:false,
-  allCats:[...LANGS.he.defaultCats],selCats:['ארץ','עיר','חי','צומח'],
-  round:0,totalRounds:3,tlimit:30,letter:'',
-  catIdx:0,catAns:{},results:{},scores:{},
-  tint:null,tleft:0,roomSub:null,
-  players:[],phase:'lobby',
-  allRoundsData:[]
-};
-
-const el=id=>document.getElementById(id);
-const go=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));el('pg-'+id).classList.add('active');window.scrollTo(0,0)};
-const genCode=()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:4},()=>c[Math.floor(Math.random()*c.length)]).join('')};
-
-const setLang=lng=>{
-  lang=lng; L=LANGS[lng];
-  document.documentElement.setAttribute('dir',L.dir);
-  el('lang-he').classList.toggle('active',lng==='he');
-  el('lang-en').classList.toggle('active',lng==='en');
-  el('lbl-name').textContent=L.name;
-  el('myname').placeholder=L.name+'...';
-  el('btn-create').textContent=L.create;
-  el('btn-join').textContent=L.join;
-  el('score-info').innerHTML=L.scoreInfo;
-  el('catnew').placeholder=L.addCat;
-  G.allCats=[...L.defaultCats];
-  G.selCats=L.defaultCats.slice(0,4);
-};
-
-// ── Home ──────────────────────────────────────────────────────
+// ── HOME ──────────────────────────────────────────────────────
 const createRoom=async()=>{
-  const name=el('myname').value.trim();
-  if(!name){el('home-err').textContent=L.name+' ?';return}
-  G.myName=name;G.isHost=true;G.roomId=genCode();
-  G.allRoundsData=[];
-  const initState={phase:'lobby',round:0,letter:'',catIdx:0,selCats:G.selCats,totalRounds:3,tlimit:30,results:{},scores:{},lang};
+  const name=e('myname').value.trim();
+  if(!name){e('home-err').textContent='נא הכנס שם';return}
+  e('home-err').textContent='';
+  G.myName=name;G.isHost=true;G.roomId=genCode();G.allRoundsData=[];
+  G.scores={};
+  const state={phase:'lobby',round:0,letter:'',selCats:G.selCats,totalRounds:3,tlimit:30,results:{},scores:{},lang,allAnswers:{},uniqueMap:{}};
   try{
-    await sb.from('rooms').insert({id:G.roomId,host:name,state:initState});
-    const{data}=await sb.from('players').insert({room_id:G.roomId,name,score:0,ready:false,answers:{}}).select().single();
+    await sb.from('rooms').insert({id:G.roomId,host:name,state});
+    const{data,error}=await sb.from('players').insert({room_id:G.roomId,name,score:0,ready:false,answers:{}}).select().single();
+    if(error)throw error;
     G.playerId=data.id;
     enterLobby();
-  }catch(e){el('home-err').textContent='Error creating room, try again';}
+  }catch(err){e('home-err').textContent='שגיאה: '+err.message;}
 };
 
 const joinRoom=async()=>{
-  const name=el('myname').value.trim();
-  const code=el('joincode').value.trim().toUpperCase();
-  if(!name){el('home-err').textContent='Enter your name';return}
-  if(code.length!==4){el('home-err').textContent='Enter a valid room code';return}
+  const name=e('myname').value.trim();
+  const code=e('joincode').value.trim().toUpperCase();
+  if(!name){e('home-err').textContent='נא הכנס שם';return}
+  if(code.length!==4){e('home-err').textContent='קוד חדר לא תקין';return}
+  e('home-err').textContent='';
   G.myName=name;G.isHost=false;G.roomId=code;G.allRoundsData=[];
   try{
     const{data:room,error}=await sb.from('rooms').select('*').eq('id',code).single();
-    if(error||!room){el('home-err').textContent='Room not found — check the code';return}
+    if(error||!room){e('home-err').textContent='חדר לא נמצא';return}
     const s=room.state;
-    if(s.phase!=='lobby'){el('home-err').textContent='Game already started';return}
-    lang=s.lang||'he'; L=LANGS[lang];
-    document.documentElement.setAttribute('dir',L.dir);
-    const{data}=await sb.from('players').insert({room_id:code,name,score:0,ready:false,answers:{}}).select().single();
-    G.playerId=data.id;
+    if(s.phase!=='lobby'){e('home-err').textContent='המשחק כבר התחיל';return}
+    lang=s.lang||'he';
+    document.documentElement.setAttribute('dir',lang==='he'?'rtl':'ltr');
     G.selCats=s.selCats||G.selCats;
+    const{data,error:e2}=await sb.from('players').insert({room_id:code,name,score:0,ready:false,answers:{}}).select().single();
+    if(e2)throw e2;
+    G.playerId=data.id;
     enterLobby();
-  }catch(e){el('home-err').textContent='Error joining, try again';}
+  }catch(err){e('home-err').textContent='שגיאה: '+err.message;}
 };
 
-// ── Lobby ─────────────────────────────────────────────────────
+// ── LOBBY ─────────────────────────────────────────────────────
 const enterLobby=()=>{
-  el('room-code').textContent=G.roomId;
-  el('lbl-lobby').textContent=L.lobby;
-  el('lbl-share').textContent=L.share;
-  el('lbl-share2').textContent=L.share2;
-  el('lbl-players').textContent=L.players;
-  el('lbl-cats').textContent=L.cats;
-  el('lbl-chip-hint').textContent=L.chipHint;
-  el('btn-addcat').textContent='+ '+L.addCat.replace('...','');
-  el('lbl-rounds').textContent=L.rounds;
-  el('lbl-time').textContent=L.time;
-  el('start-btn').textContent=L.start;
-  el('lbl-wait-host').textContent=L.waitHost;
-  el('host-settings').style.display=G.isHost?'block':'none';
-  el('guest-waiting').style.display=G.isHost?'none':'block';
+  e('room-code').textContent=G.roomId;
+  e('host-area').style.display=G.isHost?'block':'none';
+  e('guest-area').style.display=G.isHost?'none':'block';
   if(G.isHost)renderChips();
   go('lobby');
-  subscribeRoom();
-  loadPlayers();
-  setInterval(loadPlayers,3000);
+  startPolling();
 };
 
-const subscribeRoom=()=>{
-  if(G.roomSub)G.roomSub.unsubscribe();
-  G.roomSub=sb.channel('room-'+G.roomId+'-'+Date.now())
-    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'rooms',filter:`id=eq.${G.roomId}`},payload=>{
-      handleRoomUpdate(payload.new.state);
-    }).subscribe();
+const startPolling=()=>{
+  if(G.pollInt)clearInterval(G.pollInt);
+  G.pollInt=setInterval(pollRoom,2500);
 };
 
-const loadPlayers=async()=>{
-  const{data}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
-  if(data){G.players=data;renderLobbyPlayers();renderWaitPlayers();}
+const stopPolling=()=>{if(G.pollInt){clearInterval(G.pollInt);G.pollInt=null}};
+
+const pollRoom=async()=>{
+  // Load players
+  const{data:players}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
+  if(players){G.players=players;renderLobbyPlayers();renderWaitPlayers();}
+  // Check room state
+  const{data:room}=await sb.from('rooms').select('state').eq('id',G.roomId).single();
+  if(!room)return;
+  const s=room.state;
+  if(s.phase===G.phase)return; // no change
+  handleState(s);
 };
 
-const renderLobbyPlayers=()=>{
-  const e=el('lobby-players');
-  if(!G.players.length){e.innerHTML=`<div class="mut">...</div>`;return}
-  e.innerHTML=G.players.map((p,i)=>{
-    const[bg,fg]=AVC[i%AVC.length];
-    const isMe=p.id===G.playerId;
-    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}${isMe?' (אתה)':''}</span><span class="ready-chip ry">${L.connected}</span></div>`;
-  }).join('');
-};
+let currentPhase='lobby';
+const handleState=s=>{
+  if(s.phase===currentPhase)return;
+  currentPhase=s.phase;
+  G.selCats=s.selCats||G.selCats;
+  G.totalRounds=s.totalRounds||3;
+  G.tlimit=s.tlimit||30;
+  G.scores=s.scores||{};
 
-// ── Category editor ───────────────────────────────────────────
-const renderChips=()=>{
-  const avail=L.presetCats.filter(c=>!G.allCats.includes(c));
-  el('catcnt').textContent=`${G.selCats.length} selected`;
-  el('chips').innerHTML=G.allCats.map(cat=>{
-    const on=G.selCats.includes(cat);
-    return`<div class="chip${on?' on':''}" onclick="togCat('${cat}')"><span>${cat}</span><button class="x" onclick="event.stopPropagation();rmCat('${cat}')">✕</button></div>`;
-  }).join('');
-  el('presets').innerHTML=avail.slice(0,14).map(c=>`<button class="preset" onclick="addPre('${c}')">${c}</button>`).join('');
-};
-const togCat=cat=>{if(G.selCats.includes(cat))G.selCats=G.selCats.filter(c=>c!==cat);else G.selCats.push(cat);renderChips()};
-const rmCat=cat=>{G.allCats=G.allCats.filter(c=>c!==cat);G.selCats=G.selCats.filter(c=>c!==cat);renderChips()};
-const addPre=cat=>{if(!G.allCats.includes(cat)){G.allCats.push(cat);G.selCats.push(cat);renderChips()}};
-const addCat=()=>{const inp=el('catnew'),n=inp.value.trim();if(!n||G.allCats.includes(n)){inp.value='';return}G.allCats.push(n);G.selCats.push(n);inp.value='';renderChips()};
-
-// ── Host starts game ──────────────────────────────────────────
-const hostStartGame=async()=>{
-  if(G.selCats.length<2){alert('Select at least 2 categories');return}
-  G.totalRounds=parseInt(el('rnds').value);
-  G.tlimit=parseInt(el('tsec').value);
-  G.round=0;G.scores={};G.players.forEach(p=>G.scores[p.name]=0);
-  await doStartRound();
-};
-
-const doStartRound=async()=>{
-  G.round++;
-  G.letter=L.letters[Math.floor(Math.random()*L.letters.length)];
-  G.catIdx=0;G.catAns={};
-  await sb.from('players').update({answers:{},ready:false}).eq('room_id',G.roomId);
-  await pushState({phase:'playing',round:G.round,letter:G.letter,catIdx:0,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:G.scores,lang});
-};
-
-const pushState=async state=>await sb.from('rooms').update({state}).eq('id',G.roomId);
-
-// ── Room updates ──────────────────────────────────────────────
-const handleRoomUpdate=async state=>{
-  G.phase=state.phase;
-  if(state.selCats)G.selCats=state.selCats;
-  if(state.totalRounds)G.totalRounds=state.totalRounds;
-  if(state.tlimit)G.tlimit=state.tlimit;
-  if(state.scores)G.scores=state.scores;
-
-  if(state.phase==='playing'&&state.round!==G.round){
-    G.round=state.round;G.letter=state.letter;G.catIdx=0;G.catAns={};
-    startCatLocal();
-  } else if(state.phase==='results'){
-    G.results=state.results||{};G.scores=state.scores||{};
+  if(s.phase==='playing'&&s.round!==G.round){
+    G.round=s.round;G.letter=s.letter;G.catIdx=0;G.catAns={};
+    startCat();
+  } else if(s.phase==='results'){
+    G.results=s.results||{};G.scores=s.scores||{};
     if(G.tint)clearInterval(G.tint);
-    // Save round data for summary
-    if(state.allAnswers){
-      G.allRoundsData.push({round:state.round,letter:state.letter,allAnswers:state.allAnswers,results:state.results,scores:state.scores});
-    }
-    showResults(state);
-  } else if(state.phase==='final'){
-    G.scores=state.scores||{};
-    if(state.allAnswers){
-      G.allRoundsData.push({round:state.round,letter:state.letter,allAnswers:state.allAnswers,results:state.results,scores:state.scores});
-    }
+    if(s.allAnswers)G.allRoundsData.push({round:s.round,letter:s.letter,allAnswers:s.allAnswers,results:s.results,uniqueMap:s.uniqueMap||{}});
+    showResults(s);
+  } else if(s.phase==='final'){
+    G.scores=s.scores||{};
+    if(G.tint)clearInterval(G.tint);
+    if(s.allAnswers)G.allRoundsData.push({round:s.round,letter:s.letter,allAnswers:s.allAnswers,results:s.results,uniqueMap:s.uniqueMap||{}});
     showFinal();
   }
 };
 
-// ── Playing ───────────────────────────────────────────────────
-const startCatLocal=()=>{
+const renderLobbyPlayers=()=>{
+  const el=e('lobby-players');if(!el)return;
+  if(!G.players.length){el.innerHTML='<div class="mut">ממתין לשחקנים...</div>';return}
+  el.innerHTML=G.players.map((p,i)=>{
+    const[bg,fg]=AVC[i%AVC.length];
+    const me=p.id===G.playerId;
+    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}${me?' (אתה)':''}</span><span class="rc ry">מחובר</span></div>`;
+  }).join('');
+};
+
+// Category editor
+const defaultCats=()=>lang==='he'?['ארץ','עיר','חי','צומח','דומם','שם פרטי','שם משפחה','מקצוע']:['Country','City','Animal','Plant','Object','First name','Last name','Profession'];
+const presetCats=()=>lang==='he'?['פרי','ירק','צבע','סרט','זמר','ספורטאי','אוכל','ים','הר','נהר','רחוב','כלי נגינה','בגד','פרח','חרק','ספר','שחקן','מדינה','ריהוט']:['Fruit','Vegetable','Color','Movie','Singer','Athlete','Food','Sea','Mountain','River','Street','Instrument','Clothing','Flower','Insect','Book','Actor','Country','Furniture'];
+
+let allCats=defaultCats();
+
+const renderChips=()=>{
+  if(!allCats.length)allCats=defaultCats();
+  const avail=presetCats().filter(c=>!allCats.includes(c));
+  e('catcnt').textContent=`${G.selCats.length} נבחרו`;
+  e('chips').innerHTML=allCats.map(cat=>{
+    const on=G.selCats.includes(cat);
+    return`<div class="chip${on?' on':''}" onclick="togCat('${cat}')"><span>${cat}</span><button class="x" onclick="event.stopPropagation();rmCat('${cat}')">✕</button></div>`;
+  }).join('');
+  e('presets').innerHTML=avail.slice(0,14).map(c=>`<button class="preset" onclick="addPre('${c}')">${c}</button>`).join('');
+};
+const togCat=cat=>{if(G.selCats.includes(cat))G.selCats=G.selCats.filter(c=>c!==cat);else G.selCats.push(cat);renderChips()};
+const rmCat=cat=>{allCats=allCats.filter(c=>c!==cat);G.selCats=G.selCats.filter(c=>c!==cat);renderChips()};
+const addPre=cat=>{if(!allCats.includes(cat)){allCats.push(cat);G.selCats.push(cat);renderChips()}};
+const addCat=()=>{const inp=e('catnew'),n=inp.value.trim();if(!n||allCats.includes(n)){inp.value='';return}allCats.push(n);G.selCats.push(n);inp.value='';renderChips()};
+
+// ── START GAME ────────────────────────────────────────────────
+const startGame=async()=>{
+  const btn=e('start-btn');
+  if(G.selCats.length<2){e('start-err').textContent='בחר לפחות 2 קטגוריות';return}
+  e('start-err').textContent='';
+  btn.disabled=true;btn.textContent='מתחיל...';
+  G.totalRounds=parseInt(e('rnds').value);
+  G.tlimit=parseInt(e('tsec').value);
+  G.round=0;G.scores={};G.allRoundsData=[];
+  G.players.forEach(p=>G.scores[p.name]=0);
+  await doNextRound();
+  btn.disabled=false;btn.textContent='התחל משחק ↗';
+};
+
+const doNextRound=async()=>{
+  G.round++;
+  G.letter=randLetter();
+  G.catIdx=0;G.catAns={};
+  currentPhase='playing';
+  // Reset all players
+  await sb.from('players').update({answers:{},ready:false}).eq('room_id',G.roomId);
+  const state={phase:'playing',round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:G.scores,lang,allAnswers:{},uniqueMap:{}};
+  await sb.from('rooms').update({state}).eq('id',G.roomId);
+  startCat();
+};
+
+// ── PLAYING ───────────────────────────────────────────────────
+const startCat=()=>{
+  stopPolling();
   const cat=G.selCats[G.catIdx];
   G.tleft=G.tlimit;
-  el('catctr').textContent=`${G.catIdx+1} / ${G.selCats.length}`;
-  el('catnm').textContent=cat;
-  el('letpill').textContent=G.letter;
-  el('ansinp').value='';
-  el('ansinp').placeholder=L.placeholder;
-  el('btn-done').textContent=L.done;
-  el('btn-skip').textContent=L.skip;
+  e('catctr').textContent=`${G.catIdx+1} / ${G.selCats.length}`;
+  e('catnm').textContent=cat;
+  e('letpill').textContent=G.letter;
+  e('ansinp').value='';
   updateRing(G.tleft,G.tlimit);updateBonus(G.tleft);
   go('playing');
-  setTimeout(()=>el('ansinp').focus(),120);
+  setTimeout(()=>e('ansinp').focus(),120);
   if(G.tint)clearInterval(G.tint);
   G.tint=setInterval(()=>{G.tleft--;updateRing(G.tleft,G.tlimit);updateBonus(G.tleft);if(G.tleft<=0)submitAns(true)},1000);
 };
 
 const updateRing=(left,total)=>{
-  const pct=left/total,r=el('ring');
+  const pct=left/total,r=e('ring');
   r.style.strokeDasharray=CIRC;r.style.strokeDashoffset=CIRC*(1-pct);
-  r.style.stroke=left>BONUS_SECS?'#F5A623':left>5?'#1D9E75':'#E24B4A';
-  el('rnum').textContent=left;el('rnum').style.color=left<=5?'#E24B4A':'#1a1a1a';
+  r.style.stroke=left>BONUS?'#F5A623':left>5?'#1D9E75':'#E24B4A';
+  e('rnum').textContent=left;e('rnum').style.color=left<=5?'#E24B4A':'#1a1a1a';
 };
 const updateBonus=left=>{
-  const b=el('bonusbadge');
-  if(left>BONUS_SECS){b.className='bonus b2';b.textContent=`${L.bonusNow} (${left-BONUS_SECS}${L.bonusLeft}`}
-  else{b.className='bonus b1';b.textContent=L.bonusAfter}
+  const b=e('bonusbadge');
+  if(left>BONUS){b.className='bonus b2';b.textContent=`⚡ ענה עכשיו = 2 נקודות! (${left-BONUS}s לבונוס)`}
+  else{b.className='bonus b1';b.textContent='✓ עדיין מקבלים נקודה!'}
 };
 
 const submitAns=async(auto=false)=>{
   if(G.tint)clearInterval(G.tint);
   const cat=G.selCats[G.catIdx];
-  const ans=el('ansinp').value.trim();
-  const isBonus=G.tleft>BONUS_SECS;
-  G.catAns[cat]={ans,isBonus};
+  G.catAns[cat]={ans:e('ansinp').value.trim(),isBonus:G.tleft>BONUS};
   G.catIdx++;
-  if(G.catIdx<G.selCats.length){startCatLocal()}
-  else{await saveMyAnswers();showWaiting();if(G.isHost)pollAllDone();}
+  if(G.catIdx<G.selCats.length){startCat();}
+  else{await finishRound();}
 };
 
 const skipCat=async()=>{
@@ -550,141 +505,69 @@ const skipCat=async()=>{
   const cat=G.selCats[G.catIdx];
   G.catAns[cat]={ans:'',isBonus:false};
   G.catIdx++;
-  if(G.catIdx<G.selCats.length){startCatLocal()}
-  else{await saveMyAnswers();showWaiting();if(G.isHost)pollAllDone();}
+  if(G.catIdx<G.selCats.length){startCat();}
+  else{await finishRound();}
 };
 
-const saveMyAnswers=async()=>{
+const finishRound=async()=>{
   await sb.from('players').update({answers:G.catAns,ready:true}).eq('id',G.playerId);
-};
-
-const showWaiting=()=>{
-  el('wait-title').textContent=`${L.roundResults.replace('{n}',G.round)}`;
-  el('lbl-saved').textContent=L.saved;
-  el('lbl-waiting-others').textContent=L.waitingOthers;
-  el('lbl-status').textContent=L.status;
+  e('wait-title').textContent=`סבב ${G.round} — ממתין לכולם`;
   go('waiting');
+  startPolling();
+  if(G.isHost)pollForAllReady();
 };
 
 const renderWaitPlayers=()=>{
-  const e=el('wait-players');if(!e||!G.players.length)return;
-  e.innerHTML=G.players.map((p,i)=>{
+  const el=e('wait-players');if(!el)return;
+  el.innerHTML=G.players.map((p,i)=>{
     const[bg,fg]=AVC[i%AVC.length];
-    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}</span><span class="ready-chip ${p.ready?'ry':'rn2'}">${p.ready?L.finished:L.waiting}</span></div>`;
+    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}</span><span class="rc ${p.ready?'ry':'rn2'}">${p.ready?'סיים ✓':'ממתין...'}</span></div>`;
   }).join('');
 };
 
-const pollAllDone=async()=>{
+const pollForAllReady=async()=>{
   const{data}=await sb.from('players').select('*').eq('room_id',G.roomId);
   if(!data)return;
   G.players=data;renderWaitPlayers();
-  const allDone=data.every(p=>p.ready);
-  if(allDone){
+  if(data.every(p=>p.ready)){
+    stopPolling();
     const allAnswers={};
     data.forEach(p=>{allAnswers[p.name]=p.answers||{}});
-    el('chkltr').textContent=G.letter;
-    el('lbl-checking').textContent=L.checking;
-    el('lbl-ai-check').textContent=L.aiCheck;
+    currentPhase='checking';
+    e('chkltr').textContent=G.letter;
     go('checking');
-    await runAICheck(allAnswers,data);
+    await runAI(allAnswers,data);
   } else {
-    setTimeout(()=>{if(G.isHost)pollAllDone()},2000);
+    setTimeout(()=>{if(G.isHost)pollForAllReady()},2000);
   }
 };
 
-// ── AI Check with unique bonus ────────────────────────────────
-const runAICheck=async(allAnswers,players)=>{
+// ── AI CHECK ──────────────────────────────────────────────────
+const runAI=async(allAnswers,players)=>{
   const toCheck={};
   G.selCats.forEach(cat=>{
     toCheck[cat]=players.map(p=>({player:p.name,answer:(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':''}));
   });
-  const prompt=`You are a judge in a word game. The letter for this round is "${G.letter}".
-Each answer must start with the letter "${G.letter}" and be a valid answer for its category. Empty = false.
-${JSON.stringify(toCheck,null,2)}
-Return JSON only:
-{"results":{"playerName":{"category":true}}}`;
-
+  const prompt=`You are a judge in a word game. The letter is "${G.letter}". Each answer must START with "${G.letter}" and be valid for its category. Empty = false. Respond JSON only:\n{"results":{"name":{"category":true/false}}}\n\n${JSON.stringify(toCheck)}`;
   let results={};
   try{
     const res=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
-    const data=await res.json();
-    const txt=data.content.map(b=>b.text||'').join('');
-    results=JSON.parse(txt.replace(/```json|```/g,'').trim()).results||{};
-  }catch(e){
+    const d=await res.json();
+    results=JSON.parse(d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim()).results||{};
+  }catch{
     players.forEach(p=>{results[p.name]={};G.selCats.forEach(cat=>{const a=(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':'';results[p.name][cat]=a.length>0&&a[0]===G.letter})});
   }
 
-  // Find unique answers per category
+  // Unique bonus
   const uniqueMap={};
   G.selCats.forEach(cat=>{
-    const correctAnswers=players.filter(p=>(results[p.name]||{})[cat]).map(p=>((allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':'').toLowerCase().trim());
-    if(correctAnswers.length===1){
-      // Only one correct answer — find who
-      const winner=players.find(p=>(results[p.name]||{})[cat]);
-      if(winner){if(!uniqueMap[winner.name])uniqueMap[winner.name]={};uniqueMap[winner.name][cat]=true;}
-    }
+    const correct=players.filter(p=>(results[p.name]||{})[cat]);
+    if(correct.length===1){if(!uniqueMap[correct[0].name])uniqueMap[correct[0].name]={};uniqueMap[correct[0].name][cat]=true;}
   });
 
-  // Tally scores
+  // Score
   players.forEach(p=>{
-    let pts=0;
-    G.selCats.forEach(cat=>{
-      if((results[p.name]||{})[cat]){
-        const d=allAnswers[p.name]&&allAnswers[p.name][cat];
-        pts+=d&&d.isBonus?2:1;
-        if(uniqueMap[p.name]&&uniqueMap[p.name][cat])pts+=1; // unique bonus
-      }
-    });
-    G.scores[p.name]=(G.scores[p.name]||0)+pts;
-    sb.from('players').update({score:G.scores[p.name]}).eq('room_id',G.roomId).eq('name',p.name);
-  });
-
-  const isLast=G.round>=G.totalRounds;
-  await pushState({
-    phase:isLast?'final':'results',
-    round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,
-    results,scores:G.scores,allAnswers,uniqueMap,lang
-  });
-};
-
-// ── Results ───────────────────────────────────────────────────
-const showResults=async state=>{
-  const{data:players}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
-  if(players)G.players=players;
-  const allAnswers=state.allAnswers||{};
-  const results=state.results||{};
-  const uniqueMap=state.uniqueMap||{};
-
-  el('restitle').textContent=L.roundResults.replace('{n}',state.round);
-  el('res-answers-title').textContent=`${L.answers} ${state.letter}`;
-  el('lbl-score').textContent=L.score;
-
-  let h=`<thead><tr><th>${L.catCol}</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
-  G.selCats.forEach(cat=>{
-    h+=`<tr><td style="font-weight:700">${cat}</td>`;
-    G.players.forEach(p=>{
-      const d=allAnswers[p.name]&&allAnswers[p.name][cat];
-      const a=d?d.ans||'':'';const ib=d?d.isBonus:false;
-      const ok=(results[p.name]||{})[cat];
-      const isUnique=uniqueMap[p.name]&&uniqueMap[p.name][cat];
-      if(!a)h+=`<td class="mut">—</td>`;
-      else{
-        let pts='';
-        if(ok){
-          if(ib&&isUnique)pts='<span style="color:var(--gold);font-size:11px"> ⚡+2</span><span class="unique-badge" style="margin-right:2px"> +1★</span>';
-          else if(ib)pts='<span style="color:var(--gold);font-size:11px"> ⚡+2</span>';
-          else if(isUnique)pts='<span style="color:var(--green);font-size:11px"> +1</span><span class="unique-badge" style="margin-right:2px"> +1★</span>';
-          else pts='<span style="color:var(--green);font-size:11px"> +1</span>';
-        }
-        h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span>${pts}</td>`;
-      }
-    });
-    h+='</tr>';
-  });
-  // Totals row
-  h+=`<tr style="background:#f9fafb"><td style="font-weight:700">${L.roundPts}</td>`;
-  G.players.forEach(p=>{
     let pts=0;
     G.selCats.forEach(cat=>{
       if((results[p.name]||{})[cat]){
@@ -693,91 +576,119 @@ const showResults=async state=>{
         if(uniqueMap[p.name]&&uniqueMap[p.name][cat])pts+=1;
       }
     });
+    G.scores[p.name]=(G.scores[p.name]||0)+pts;
+    sb.from('players').update({score:G.scores[p.name]}).eq('room_id',G.roomId).eq('name',p.name);
+  });
+
+  const isLast=G.round>=G.totalRounds;
+  currentPhase=isLast?'final':'results';
+  const state={phase:currentPhase,round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results,scores:G.scores,lang,allAnswers,uniqueMap};
+  await sb.from('rooms').update({state}).eq('id',G.roomId);
+
+  G.allRoundsData.push({round:G.round,letter:G.letter,allAnswers,results,uniqueMap});
+  if(isLast)showFinal();else showResults(state);
+};
+
+// ── RESULTS ───────────────────────────────────────────────────
+const showResults=async(s)=>{
+  const{data:pl}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
+  if(pl)G.players=pl;
+  const aa=s.allAnswers||{},res=s.results||{},um=s.uniqueMap||{};
+  e('restitle').textContent=`תוצאות סבב ${s.round}`;
+  e('res-sub').textContent=`האות: ${s.letter}`;
+  let h=`<thead><tr><th>קטגוריה</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
+  G.selCats.forEach(cat=>{
+    h+=`<tr><td style="font-weight:700">${cat}</td>`;
+    G.players.forEach(p=>{
+      const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';const ib=d?d.isBonus:false;
+      const ok=(res[p.name]||{})[cat];const uniq=um[p.name]&&um[p.name][cat];
+      if(!a)h+=`<td class="mut">—</td>`;
+      else{
+        let pts='';
+        if(ok){
+          const base=ib?'<span style="color:var(--gold);font-size:11px">⚡+2</span>':'<span style="color:var(--green);font-size:11px">+1</span>';
+          const u=uniq?'<span class="ubadge">+1⭐</span>':'';
+          pts=` ${base}${u}`;
+        }
+        h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span>${pts}</td>`;
+      }
+    });
+    h+='</tr>';
+  });
+  h+=`<tr style="background:#f9fafb"><td style="font-weight:700">סה"כ</td>`;
+  G.players.forEach(p=>{
+    let pts=0;
+    G.selCats.forEach(cat=>{if((res[p.name]||{})[cat]){const d=aa[p.name]&&aa[p.name][cat];pts+=d&&d.isBonus?2:1;if(um[p.name]&&um[p.name][cat])pts+=1;}});
     h+=`<td><span style="background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">+${pts}</span></td>`;
   });
   h+='</tr></tbody>';
-  el('restbl').innerHTML=h;
-  renderBoard('scoreboard',G.players,state.scores||{});
-
-  const nxt=el('nxtbtn');const gn=el('guest-next');
+  e('restbl').innerHTML=h;
+  renderBoard('scoreboard',G.players,s.scores||{});
+  const nb=e('nxtbtn'),gn=e('guest-wait-next');
   if(G.isHost){
-    nxt.style.display='block';
-    nxt.textContent=state.round<state.totalRounds?L.nextRound.replace('{n}',state.round+1):L.finalResults;
+    nb.style.display='block';nb.textContent=s.round<s.totalRounds?`סבב ${s.round+1} ↗`:'תוצאות סופיות ↗';
     gn.style.display='none';
-  } else {
-    nxt.style.display='none';
-    gn.style.display='block';
-    el('lbl-wait-next').textContent=L.waitNext;
-  }
+  }else{nb.style.display='none';gn.style.display='block';}
+  startPolling();
   go('results');
 };
 
 const nextRound=async()=>{
+  stopPolling();
   if(G.round<G.totalRounds){
     await sb.from('players').update({ready:false,answers:{}}).eq('room_id',G.roomId);
-    await doStartRound();
-  } else {
-    await pushState({phase:'final',round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:G.scores,lang});
+    await doNextRound();
+  }else{
+    currentPhase='final';
+    await sb.from('rooms').update({state:{phase:'final',round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:G.scores,lang,allAnswers:{},uniqueMap:{}}}).eq('id',G.roomId);
+    showFinal();
   }
 };
 
 const renderBoard=(id,players,scores)=>{
-  const sorted=[...players].sort((a,b)=>(scores[b.name]||0)-(scores[a.name]||0));
-  el(id).innerHTML=sorted.map((p,i)=>{
+  const s=[...players].sort((a,b)=>(scores[b.name]||0)-(scores[a.name]||0));
+  e(id).innerHTML=s.map((p,i)=>{
     const[bg,fg]=AVC[i%AVC.length];const rc=['r1','r2','r3','r4'][i]||'r4';
     return`<div class="rank-row"><div class="rn ${rc}">${i+1}</div><div class="av" style="background:${bg};color:${fg};width:32px;height:32px">${p.name[0]}</div><span style="flex:1;font-weight:600">${p.name}</span><span class="pscore">${scores[p.name]||0}</span></div>`;
   }).join('');
 };
 
 const showFinal=async()=>{
-  const{data:players}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
-  if(players)G.players=players;
-  const sorted=[...G.players].sort((a,b)=>(G.scores[b.name]||0)-(G.scores[a.name]||0));
-  const w=sorted[0];
-  el('lbl-final').textContent=L.finalTitle;
-  el('lbl-scoretable').textContent=L.scoreTable;
-  el('wincard').innerHTML=w?`<div style="font-size:52px;margin-bottom:10px">🏆</div><div style="font-size:24px;font-weight:900;color:var(--gd)">${w.name}</div><div style="font-size:15px;color:var(--green);margin-top:4px">${G.scores[w.name]||0} pts</div>`:'';
+  stopPolling();
+  const{data:pl}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
+  if(pl)G.players=pl;
+  const s=[...G.players].sort((a,b)=>(G.scores[b.name]||0)-(G.scores[a.name]||0));
+  const w=s[0];
+  e('wincard').innerHTML=w?`<div style="font-size:52px;margin-bottom:10px">🏆</div><div style="font-size:24px;font-weight:900;color:var(--gd)">${w.name}</div><div style="font-size:15px;color:var(--green);margin-top:4px">${G.scores[w.name]||0} נקודות</div>`:'';
   renderBoard('finalboard',G.players,G.scores);
-  el('again-btn').style.display=G.isHost?'block':'none';
-  el('btn-summary').style.display='block';
-  el('again-btn').textContent=L.playAgain;
-  el('btn-home').textContent=L.home;
-  el('btn-summary').textContent=L.summaryBtn;
+  e('again-btn').style.display=G.isHost?'block':'none';
+  e('btn-summary').style.display=G.allRoundsData.length?'block':'none';
   buildSummary();
   go('final');
 };
 
-// ── Full game summary ─────────────────────────────────────────
 const buildSummary=()=>{
-  el('lbl-summary').textContent=L.summary;
-  el('btn-to-final').textContent=L.toFinal;
-  if(!G.allRoundsData.length){el('summary-rounds').innerHTML='<div class="mut tc">No data</div>';return}
-  el('summary-rounds').innerHTML=G.allRoundsData.map(rd=>{
-    const allAnswers=rd.allAnswers||{};const results=rd.results||{};
-    let h=`<div class="card"><div class="ct">${L.summaryRound.replace('{n}',rd.round)} ${rd.letter}</div><div class="tbl-wrap"><table>`;
-    h+=`<thead><tr><th>${L.catCol}</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
+  if(!G.allRoundsData.length){e('summary-content').innerHTML='<div class="mut tc">אין נתונים</div>';return}
+  e('summary-content').innerHTML=G.allRoundsData.map(rd=>{
+    const aa=rd.allAnswers||{},res=rd.results||{};
+    let h=`<div class="card"><div class="ct">סבב ${rd.round} — האות: ${rd.letter}</div><div class="tbl-wrap"><table>`;
+    h+=`<thead><tr><th>קטגוריה</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
     G.selCats.forEach(cat=>{
       h+=`<tr><td style="font-weight:700">${cat}</td>`;
-      G.players.forEach(p=>{
-        const d=allAnswers[p.name]&&allAnswers[p.name][cat];
-        const a=d?d.ans||'':'';const ok=(results[p.name]||{})[cat];
-        if(!a)h+=`<td class="mut">—</td>`;
-        else h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span></td>`;
-      });
+      G.players.forEach(p=>{const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';const ok=(res[p.name]||{})[cat];if(!a)h+=`<td class="mut">—</td>`;else h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span></td>`;});
       h+='</tr>';
     });
-    h+='</tbody></table></div></div>';
-    return h;
+    h+='</tbody></table></div></div>';return h;
   }).join('');
 };
 
 const playAgain=async()=>{
-  G.round=0;G.scores={};G.allRoundsData=[];
+  G.round=0;G.scores={};G.allRoundsData=[];currentPhase='lobby';
   G.players.forEach(p=>G.scores[p.name]=0);
+  allCats=defaultCats();G.selCats=allCats.slice(0,4);
   await sb.from('players').update({ready:false,answers:{},score:0}).eq('room_id',G.roomId);
-  el('host-settings').style.display='block';el('guest-waiting').style.display='none';
-  renderChips();go('lobby');
-  await pushState({phase:'lobby',round:0,letter:'',catIdx:0,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:{},lang});
+  await sb.from('rooms').update({state:{phase:'lobby',round:0,letter:'',selCats:G.selCats,totalRounds:3,tlimit:30,results:{},scores:{},lang,allAnswers:{},uniqueMap:{}}}).eq('id',G.roomId);
+  enterLobby();
 };
 </script>
 </body>
