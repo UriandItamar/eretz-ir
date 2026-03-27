@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 ארץ עיר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;--gm:#9FE1CB;
+  --pl:#EEEDFE;--pd:#3C3489;
+  --red:#E24B4A;--gold:#F5A623;--goldl:#FFF8E6;
+  --bg:#F5F4F0;--sur:#fff;--brd:rgba(0,0,0,.09);
+  --txt:#1a1a1a;--mut:#6b6b6b;--r:14px;--rs:9px
+}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.page{display:none;min-height:100vh;flex-direction:column}
+.page.active{display:flex}
+.hdr{background:var(--sur);border-bottom:1px solid var(--brd);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.hdr-t{font-size:17px;font-weight:700}
+.main{flex:1;padding:18px 15px 40px;max-width:580px;margin:0 auto;width:100%}
+.card{background:var(--sur);border-radius:var(--r);border:1px solid var(--brd);padding:18px;margin-bottom:13px}
+.ct{font-size:15px;font-weight:700;margin-bottom:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 20px;border-radius:var(--rs);border:1px solid var(--brd);font-size:15px;font-weight:600;cursor:pointer;background:var(--sur);color:var(--txt);font-family:'Heebo',sans-serif;transition:all .15s;width:100%}
+.btn:hover{background:var(--bg)}
+.btn:active{transform:scale(.98)}
+.btn-p{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-p:hover{background:var(--gd);border-color:var(--gd)}
+.btn-sm{padding:7px 13px;font-size:13px;width:auto}
+.btn-gold{background:var(--gold);color:#fff;border-color:var(--gold);font-size:17px;padding:14px 20px}
+.btn-gold:hover{background:#e0941a}
+.btn-skip{color:var(--mut);background:transparent;border-color:var(--brd);font-size:14px}
+input[type=text],select{width:100%;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--brd);font-size:15px;font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);outline:none;transition:border .15s}
+input[type=text]:focus,select:focus{border-color:var(--green);background:#fff}
+.ilabel{font-size:13px;color:var(--mut);margin-bottom:5px}
+.p-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--rs);background:var(--bg);margin-bottom:6px}
+.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--brd);border-radius:20px;padding:5px 10px 5px 12px;font-size:13px;cursor:pointer;transition:all .15s}
+.chip.on{background:var(--gl);border-color:var(--gm);color:var(--gd);font-weight:600}
+.chip .x{background:none;border:none;font-size:14px;cursor:pointer;color:#bbb;padding:0 0 0 2px;line-height:1}
+.chip.on .x{color:var(--green)}
+.chip .x:hover{color:var(--red)}
+.presets{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.preset{background:var(--sur);border:1px solid var(--brd);border-radius:12px;padding:3px 10px;font-size:12px;cursor:pointer;font-family:'Heebo',sans-serif;color:var(--mut)}
+.preset:hover{color:var(--txt);border-color:var(--green)}
+.cat-hdr{text-align:center;padding:20px 20px 14px;background:var(--sur);border-bottom:1px solid var(--brd)}
+.cat-ctr{font-size:13px;color:var(--mut);margin-bottom:5px}
+.cat-nm{font-size:34px;font-weight:900}
+.let-pill{display:inline-block;background:var(--pl);color:var(--pd);font-size:20px;font-weight:900;padding:4px 18px;border-radius:30px;margin-top:6px;letter-spacing:2px}
+.timer-wrap{display:flex;flex-direction:column;align-items:center;padding:16px 0 8px}
+.ring-wrap{position:relative;width:110px;height:110px;margin-bottom:10px}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:#eee;stroke-width:10}
+.ring-fg{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke .4s}
+.ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900}
+.bonus{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:700;transition:all .4s}
+.b2{background:var(--goldl);color:var(--gold)}
+.b1{background:var(--gl);color:var(--gd)}
+.ans-area{padding:12px 15px 20px;max-width:580px;margin:0 auto;width:100%}
+.big-inp{font-size:22px;font-weight:700;text-align:center;padding:16px;border-radius:var(--r);border:2px solid var(--brd);background:var(--sur);margin-bottom:12px;width:100%;font-family:'Heebo',sans-serif;color:var(--txt);outline:none;transition:border-color .2s}
+.big-inp:focus{border-color:var(--green)}
+.a-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:var(--rs);background:var(--bg);font-size:14px;margin-bottom:5px}
+.a-cat{color:var(--mut);width:90px;flex-shrink:0;font-size:13px}
+.a-val{flex:1;font-weight:600}
+.pchip{padding:2px 9px;border-radius:10px;font-size:12px;font-weight:700}
+.p2{background:var(--goldl);color:var(--gold)}
+.p1{background:var(--gl);color:var(--gd)}
+.p0{background:#f0f0f0;color:var(--mut)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
+th{text-align:right;font-size:11px;color:var(--mut);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--brd)}
+td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
+.ok{color:var(--green);font-weight:700}
+.no{color:var(--red)}
+.rank-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);margin-bottom:6px;background:var(--bg)}
+.rn{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.r1{background:#FFF3CD;color:#856404}.r2{background:#E9ECEF;color:#495057}.r3{background:#FFE5D0;color:#7D3A0A}.r4{background:#f0f0f0;color:#666}
+.pscore{font-size:16px;font-weight:700;color:var(--green)}
+.win-card{background:linear-gradient(135deg,var(--gl),#fff);border:1px solid var(--gm);border-radius:var(--r);padding:26px;text-align:center;margin-bottom:13px}
+.err{color:var(--red);font-size:13px;margin-top:6px}
+.mut{font-size:13px;color:var(--mut)}
+.tc{text-align:center}
+.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}
+.sr{display:flex;gap:12px}.sr>div{flex:1}
+.ar{display:flex;gap:8px;margin-bottom:10px}.ar input{flex:1}
+.ibox{background:var(--goldl);border:1px solid #f5d080;border-radius:var(--rs);padding:11px 14px;font-size:13px;line-height:1.7}
+.spin{animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.code-big{font-size:36px;font-weight:900;letter-spacing:8px;color:var(--pd);background:var(--pl);padding:16px 24px;border-radius:var(--r);text-align:center;margin-bottom:12px}
+.waiting-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1s infinite}
+.waiting-dot:nth-child(2){animation-delay:.2s}
+.waiting-dot:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.ready-chip{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700}
+.ready-yes{background:var(--gl);color:var(--gd)}
+.ready-no{background:#f0f0f0;color:var(--mut)}
+@media(max-width:400px){.sr{flex-direction:column}.cat-nm{font-size:26px}}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="page active" id="pg-home">
+  <div class="hdr"><div class="hdr-t">🌍 ארץ עיר</div><div class="mut">מרובה שחקנים</div></div>
+  <div class="main">
+    <div class="card tc" style="padding:30px 20px 24px">
+      <div style="font-size:52px;margin-bottom:10px">🌍</div>
+      <div style="font-size:24px;font-weight:900;margin-bottom:6px">ארץ עיר</div>
+      <div class="mut mb16">כל אחד עונה במכשיר שלו</div>
+      <div style="margin-bottom:12px">
+        <div class="ilabel mb8">השם שלך</div>
+        <input type="text" id="myname" placeholder="הכנס את שמך..." maxlength="20"/>
+      </div>
+      <button class="btn btn-p mb8" onclick="createRoom()">צור חדר חדש</button>
+      <div style="margin:10px 0;font-size:13px;color:var(--mut)">— או —</div>
+      <div class="ar" style="margin-bottom:0">
+        <input type="text" id="joincode" placeholder="קוד חדר..." maxlength="4" style="text-transform:uppercase;letter-spacing:3px;text-align:center;font-weight:700;font-size:18px"/>
+        <button class="btn btn-p btn-sm" onclick="joinRoom()">הצטרף</button>
+      </div>
+      <div id="home-err" class="err tc"></div>
+    </div>
+    <div class="ibox">
+      <strong>⚡ ניקוד:</strong><br>
+      ענית נכון תוך 10 שניות ← <strong style="color:var(--gold)">2 נקודות</strong><br>
+      ענית נכון אחרי 10 שניות ← <strong style="color:var(--green)">1 נקודה</strong>
+    </div>
+  </div>
+</div>
+
+<!-- LOBBY (HOST) -->
+<div class="page" id="pg-lobby">
+  <div class="hdr"><div class="hdr-t">🏠 לובי</div><div class="mut" id="lobby-round"></div></div>
+  <div class="main">
+    <div class="card tc">
+      <div class="mut mb8">שתפו את הקוד עם החברים</div>
+      <div class="code-big" id="room-code">----</div>
+      <div class="mut" style="font-size:12px">החברים יפתחו את אותו הקישור ויכניסו את הקוד</div>
+    </div>
+    <div class="card">
+      <div class="ct">שחקנים מחוברים</div>
+      <div id="lobby-players"></div>
+    </div>
+    <div class="card" id="host-settings" style="display:none">
+      <div class="ct">קטגוריות</div>
+      <div style="font-size:12px;color:var(--mut);margin-bottom:8px" id="catcnt"></div>
+      <div class="chips" id="chips"></div>
+      <div class="mut mb8" style="font-size:12px">לחץ לבחירה/ביטול · ✕ למחיקה</div>
+      <div class="ar">
+        <input type="text" id="catnew" placeholder="הוסף קטגוריה..." maxlength="20" onkeydown="if(event.key==='Enter')addCat()"/>
+        <button class="btn btn-p btn-sm" onclick="addCat()">+ הוסף</button>
+      </div>
+      <div class="presets" id="presets"></div>
+      <div style="height:16px"></div>
+      <div class="sr mb12">
+        <div><div class="ilabel">סבבים</div>
+          <select id="rnds"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+        </div>
+        <div><div class="ilabel">זמן לקטגוריה</div>
+          <select id="tsec"><option value="20">20 שניות</option><option value="30" selected>30 שניות</option><option value="45">45 שניות</option><option value="60">60 שניות</option></select>
+        </div>
+      </div>
+      <button class="btn btn-p" id="start-btn" onclick="hostStartGame()">התחל משחק ↗</button>
+    </div>
+    <div class="card tc" id="guest-waiting" style="display:none">
+      <div style="font-size:14px;color:var(--mut);margin-bottom:10px">ממתין למארח להתחיל...</div>
+      <div><span class="waiting-dot"></span> <span class="waiting-dot"></span> <span class="waiting-dot"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYING -->
+<div class="page" id="pg-playing">
+  <div class="cat-hdr">
+    <div class="cat-ctr" id="catctr"></div>
+    <div class="cat-nm" id="catnm"></div>
+    <div class="let-pill" id="letpill"></div>
+  </div>
+  <div class="timer-wrap">
+    <div class="ring-wrap">
+      <svg width="110" height="110" viewBox="0 0 110 110">
+        <circle class="ring-bg" cx="55" cy="55" r="48"/>
+        <circle class="ring-fg" id="ring" cx="55" cy="55" r="48"/>
+      </svg>
+      <div class="ring-num" id="rnum">30</div>
+    </div>
+    <div class="bonus b2" id="bonusbadge">⚡ ענה עכשיו = 2 נקודות!</div>
+  </div>
+  <div class="ans-area">
+    <input type="text" class="big-inp" id="ansinp" placeholder="כתוב תשובה..." autocomplete="off" autocorrect="off" autocapitalize="off" onkeydown="if(event.key==='Enter')submitAns()"/>
+    <button class="btn btn-gold" onclick="submitAns()">סיימתי ✓</button>
+    <button class="btn btn-skip" style="margin-top:8px" onclick="skipCat()">דלג →</button>
+  </div>
+</div>
+
+<!-- WAITING FOR OTHERS -->
+<div class="page" id="pg-waiting">
+  <div class="hdr"><div class="hdr-t" id="wait-title"></div></div>
+  <div class="main">
+    <div class="card tc" style="padding:30px">
+      <div style="font-size:13px;color:var(--mut);margin-bottom:16px">התשובה שלך נשמרה ✓</div>
+      <div style="font-size:16px;font-weight:600;margin-bottom:16px">ממתין לשאר השחקנים...</div>
+      <div><span class="waiting-dot"></span> <span class="waiting-dot"></span> <span class="waiting-dot"></span></div>
+    </div>
+    <div class="card">
+      <div class="ct">סטטוס שחקנים</div>
+      <div id="wait-players"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKING -->
+<div class="page" id="pg-checking">
+  <div class="hdr"><div class="hdr-t">בודק תשובות...</div></div>
+  <div class="main">
+    <div class="card tc" style="padding:40px 20px">
+      <div style="font-size:40px;margin-bottom:16px" class="spin">⚙️</div>
+      <div style="font-size:16px;font-weight:600;margin-bottom:6px">ה-AI בודק את הסבב</div>
+      <div class="mut">מעריך כל תשובה לפי האות <strong id="chkltr"></strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ROUND RESULTS -->
+<div class="page" id="pg-results">
+  <div class="hdr"><div class="hdr-t" id="restitle"></div></div>
+  <div class="main">
+    <div class="card">
+      <div class="ct">תשובות — האות: <span id="resltr"></span></div>
+      <div class="tbl-wrap"><table id="restbl"></table></div>
+    </div>
+    <div class="card">
+      <div class="ct">ניקוד מצטבר</div>
+      <div id="scoreboard"></div>
+    </div>
+    <button class="btn btn-p" id="nxtbtn" onclick="nextRound()" style="margin-bottom:40px;display:none"></button>
+    <div class="card tc" id="guest-next" style="display:none">
+      <div class="mut">ממתין למארח להתחיל את הסבב הבא...</div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div class="page" id="pg-final">
+  <div class="hdr"><div class="hdr-t">🏆 תוצאות סופיות</div></div>
+  <div class="main">
+    <div class="win-card" id="wincard"></div>
+    <div class="card"><div class="ct">טבלת ניקוד</div><div id="finalboard"></div></div>
+    <button class="btn btn-p mb12" id="again-btn" onclick="playAgain()" style="display:none">שחק שוב ↗</button>
+    <button class="btn" onclick="go('home')">חזור לתפריט</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPA_URL = 'https://evdkkopgfwdcteomwtaf.supabase.co';
+const SUPA_KEY = 'sb_publishable_tPdbBFmcSWtOamNIMs07rg_37j_Bi3H';
+const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+const DCATS=['ארץ','עיר','חי','צומח','דומם','שם פרטי','שם משפחה','מקצוע'];
+const PCATS=['פרי','ירק','צבע','סרט','זמר','ספורטאי','אוכל','ים','הר','נהר','רחוב','כלי נגינה','בגד','פרח','חרק','ספר','שחקן','מדינה','מטבח','ריהוט'];
+const LTRS='אבגדהוזחטיכלמנסעפצקרשת'.split('');
+const AVC=[['#EEEDFE','#3C3489'],['#E1F5EE','#085041'],['#FAECE7','#712B13'],['#E6F1FB','#0C447C'],['#FAEEDA','#633806'],['#FCEBEB','#791F1F'],['#EAF3DE','#27500A'],['#FBEAF0','#72243E']];
+const CIRC=2*Math.PI*48;
+const BONUS_SECS=10;
+const AI_API='https://api.anthropic.com/v1/messages';
+
+let G={
+  myName:'', roomId:'', playerId:'', isHost:false,
+  allCats:[...DCATS], selCats:['ארץ','עיר','חי','צומח'],
+  round:0, totalRounds:3, tlimit:30, letter:'',
+  catIdx:0, catAns:{}, results:{}, scores:{},
+  tint:null, tleft:0, roomSub:null, playersSub:null,
+  players:[], phase:'lobby'
+};
+
+const el=id=>document.getElementById(id);
+const go=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));el('pg-'+id).classList.add('active');window.scrollTo(0,0)};
+const genCode=()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:4},()=>c[Math.floor(Math.random()*c.length)]).join('')};
+
+// ── Home ─────────────────────────────────────────────────────
+const createRoom = async () => {
+  const name = el('myname').value.trim();
+  if (!name) { el('home-err').textContent='הכנס את שמך'; return; }
+  G.myName = name;
+  G.isHost = true;
+  G.roomId = genCode();
+  try {
+    await sb.from('rooms').insert({ id: G.roomId, host: name, state: { phase:'lobby', round:0, letter:'', catIdx:0, selCats:G.selCats, totalRounds:3, tlimit:30, results:{}, scores:{} } });
+    const { data } = await sb.from('players').insert({ room_id: G.roomId, name, score: 0, ready: false, answers: {} }).select().single();
+    G.playerId = data.id;
+    enterLobby();
+  } catch(e) { el('home-err').textContent='שגיאה ביצירת חדר, נסה שוב'; }
+};
+
+const joinRoom = async () => {
+  const name = el('myname').value.trim();
+  const code = el('joincode').value.trim().toUpperCase();
+  if (!name) { el('home-err').textContent='הכנס את שמך'; return; }
+  if (code.length !== 4) { el('home-err').textContent='הכנס קוד חדר תקין'; return; }
+  G.myName = name; G.isHost = false; G.roomId = code;
+  try {
+    const { data: room } = await sb.from('rooms').select('*').eq('id', code).single();
+    if (!room) { el('home-err').textContent='חדר לא נמצא — בדוק את הקוד'; return; }
+    const roomState = room.state;
+    if (roomState.phase !== 'lobby') { el('home-err').textContent='המשחק כבר התחיל'; return; }
+    const { data } = await sb.from('players').insert({ room_id: code, name, score: 0, ready: false, answers: {} }).select().single();
+    G.playerId = data.id;
+    enterLobby();
+  } catch(e) { el('home-err').textContent='שגיאה בהצטרפות, נסה שוב'; }
+};
+
+// ── Lobby ─────────────────────────────────────────────────────
+const enterLobby = () => {
+  el('room-code').textContent = G.roomId;
+  el('lobby-round').textContent = '';
+  el('host-settings').style.display = G.isHost ? 'block' : 'none';
+  el('guest-waiting').style.display = G.isHost ? 'none' : 'block';
+  if (G.isHost) renderChips();
+  go('lobby');
+  subscribeRoom();
+  subscribePlayers();
+};
+
+const subscribeRoom = () => {
+  if (G.roomSub) G.roomSub.unsubscribe();
+  G.roomSub = sb.channel('room-'+G.roomId)
+    .on('postgres_changes', { event:'UPDATE', schema:'public', table:'rooms', filter:`id=eq.${G.roomId}` }, payload => {
+      handleRoomUpdate(payload.new.state);
+    }).subscribe();
+};
+
+const subscribePlayers = () => {
+  if (G.playersSub) G.playersSub.unsubscribe();
+  G.playersSub = sb.channel('players-'+G.roomId)
+    .on('postgres_changes', { event:'*', schema:'public', table:'players', filter:`room_id=eq.${G.roomId}` }, () => {
+      loadPlayers();
+    }).subscribe();
+};
+
+const loadPlayers = async () => {
+  const { data } = await sb.from('players').select('*').eq('room_id', G.roomId).order('created_at');
+  if (data) { G.players = data; renderLobbyPlayers(); renderWaitPlayers(); }
+};
+
+const renderLobbyPlayers = () => {
+  const e = el('lobby-players');
+  if (!G.players.length) { e.innerHTML='<div class="mut">ממתין לשחקנים...</div>'; return; }
+  e.innerHTML = G.players.map((p,i) => {
+    const [bg,fg]=AVC[i%AVC.length];
+    const isMe = p.id === G.playerId;
+    const isHost = p.name === (G.isHost ? G.myName : '');
+    return `<div class="p-item">
+      <div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div>
+      <span style="flex:1;font-size:14px;font-weight:600">${p.name}${isMe?' (אתה)':''}</span>
+      <span class="ready-chip ready-yes">מחובר</span>
+    </div>`;
+  }).join('');
+};
+
+// ── Category editor ───────────────────────────────────────────
+const renderChips = () => {
+  const avail=PCATS.filter(c=>!G.allCats.includes(c));
+  el('catcnt').textContent=`${G.selCats.length} נבחרו`;
+  el('chips').innerHTML=G.allCats.map(cat=>{
+    const on=G.selCats.includes(cat);
+    return`<div class="chip${on?' on':''}" onclick="togCat('${cat}')"><span>${cat}</span><button class="x" onclick="event.stopPropagation();rmCat('${cat}')">✕</button></div>`;
+  }).join('');
+  el('presets').innerHTML=avail.slice(0,14).map(c=>`<button class="preset" onclick="addPre('${c}')">${c}</button>`).join('');
+};
+const togCat=cat=>{if(G.selCats.includes(cat))G.selCats=G.selCats.filter(c=>c!==cat);else G.selCats.push(cat);renderChips()};
+const rmCat=cat=>{G.allCats=G.allCats.filter(c=>c!==cat);G.selCats=G.selCats.filter(c=>c!==cat);renderChips()};
+const addPre=cat=>{if(!G.allCats.includes(cat)){G.allCats.push(cat);G.selCats.push(cat);renderChips()}};
+const addCat=()=>{const inp=el('catnew'),n=inp.value.trim();if(!n||G.allCats.includes(n)){inp.value='';return}G.allCats.push(n);G.selCats.push(n);inp.value='';renderChips()};
+
+// ── Host starts game ──────────────────────────────────────────
+const hostStartGame = async () => {
+  if (G.selCats.length < 2) { alert('בחר לפחות 2 קטגוריות'); return; }
+  G.totalRounds = parseInt(el('rnds').value);
+  G.tlimit = parseInt(el('tsec').value);
+  G.round = 0; G.scores = {};
+  G.players.forEach(p => G.scores[p.name] = 0);
+  await pushRoomState({ phase:'starting', round:0, letter:'', catIdx:0, selCats:G.selCats, totalRounds:G.totalRounds, tlimit:G.tlimit, results:{}, scores:G.scores });
+  doStartRound();
+};
+
+const doStartRound = async () => {
+  G.round++;
+  G.letter = LTRS[Math.floor(Math.random()*LTRS.length)];
+  G.catIdx = 0; G.catAns = {};
+  // Reset all player answers
+  await sb.from('players').update({ answers:{}, ready:false, score: G.scores[G.myName]||0 }).eq('room_id', G.roomId);
+  await pushRoomState({ phase:'playing', round:G.round, letter:G.letter, catIdx:0, selCats:G.selCats, totalRounds:G.totalRounds, tlimit:G.tlimit, results:{}, scores:G.scores });
+};
+
+const pushRoomState = async (state) => {
+  await sb.from('rooms').update({ state }).eq('id', G.roomId);
+};
+
+// ── Handle room updates (all clients) ────────────────────────
+const handleRoomUpdate = async (state) => {
+  G.phase = state.phase;
+  if (state.selCats) G.selCats = state.selCats;
+  if (state.totalRounds) G.totalRounds = state.totalRounds;
+  if (state.tlimit) G.tlimit = state.tlimit;
+  if (state.scores) G.scores = state.scores;
+
+  if (state.phase === 'playing' && state.round !== G.round) {
+    G.round = state.round;
+    G.letter = state.letter;
+    G.catIdx = 0; G.catAns = {};
+    startCatLocal();
+  } else if (state.phase === 'results') {
+    G.results = state.results || {};
+    G.scores = state.scores || {};
+    if (G.tint) clearInterval(G.tint);
+    showResults(state);
+  } else if (state.phase === 'final') {
+    G.scores = state.scores || {};
+    showFinal();
+  }
+};
+
+// ── Playing ───────────────────────────────────────────────────
+const startCatLocal = () => {
+  const cat = G.selCats[G.catIdx];
+  G.tleft = G.tlimit;
+  el('catctr').textContent=`קטגוריה ${G.catIdx+1} מתוך ${G.selCats.length}`;
+  el('catnm').textContent=cat;
+  el('letpill').textContent=`האות: ${G.letter}`;
+  el('ansinp').value='';
+  updateRing(G.tleft,G.tlimit);
+  updateBonus(G.tleft);
+  go('playing');
+  setTimeout(()=>el('ansinp').focus(),120);
+  if(G.tint)clearInterval(G.tint);
+  G.tint=setInterval(()=>{
+    G.tleft--;
+    updateRing(G.tleft,G.tlimit);
+    updateBonus(G.tleft);
+    if(G.tleft<=0) submitAns(true);
+  },1000);
+};
+
+const updateRing=(left,total)=>{
+  const pct=left/total, r=el('ring');
+  r.style.strokeDasharray=CIRC;
+  r.style.strokeDashoffset=CIRC*(1-pct);
+  r.style.stroke=left>BONUS_SECS?'#F5A623':left>5?'#1D9E75':'#E24B4A';
+  el('rnum').textContent=left;
+  el('rnum').style.color=left<=5?'#E24B4A':'#1a1a1a';
+};
+const updateBonus=left=>{
+  const b=el('bonusbadge');
+  if(left>BONUS_SECS){b.className='bonus b2';b.textContent=`⚡ ענה עכשיו = 2 נקודות! (${left-BONUS_SECS}s לבונוס)`}
+  else{b.className='bonus b1';b.textContent='✓ עדיין מקבלים נקודה — ענו!'}
+};
+
+const submitAns = async (auto=false) => {
+  if(G.tint)clearInterval(G.tint);
+  const cat=G.selCats[G.catIdx];
+  const ans=el('ansinp').value.trim();
+  const isBonus=G.tleft>BONUS_SECS;
+  if(!G.catAns[cat])G.catAns[cat]={};
+  G.catAns[cat]={ans,isBonus};
+  G.catIdx++;
+
+  if (G.catIdx < G.selCats.length) {
+    // More categories — next one
+    startCatLocal();
+  } else {
+    // All categories done — save answers & wait
+    await saveMyAnswers();
+    showWaiting();
+    if (G.isHost) checkIfAllDone();
+  }
+};
+
+const skipCat = async () => {
+  if(G.tint)clearInterval(G.tint);
+  const cat=G.selCats[G.catIdx];
+  G.catAns[cat]={ans:'',isBonus:false};
+  G.catIdx++;
+  if (G.catIdx < G.selCats.length) {
+    startCatLocal();
+  } else {
+    await saveMyAnswers();
+    showWaiting();
+    if (G.isHost) checkIfAllDone();
+  }
+};
+
+const saveMyAnswers = async () => {
+  await sb.from('players').update({ answers: G.catAns, ready: true }).eq('id', G.playerId);
+};
+
+const showWaiting = () => {
+  el('wait-title').textContent = `סבב ${G.round} — ממתין לכולם`;
+  go('waiting');
+  renderWaitPlayers();
+};
+
+const renderWaitPlayers = () => {
+  const e = el('wait-players');
+  if (!e || !G.players.length) return;
+  e.innerHTML = G.players.map((p,i) => {
+    const [bg,fg]=AVC[i%AVC.length];
+    const done = p.ready;
+    return `<div class="p-item">
+      <div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div>
+      <span style="flex:1;font-size:14px;font-weight:600">${p.name}</span>
+      <span class="ready-chip ${done?'ready-yes':'ready-no'}">${done?'סיים ✓':'ממתין...'}</span>
+    </div>`;
+  }).join('');
+};
+
+// Host checks if all players are done
+const checkIfAllDone = async () => {
+  const { data } = await sb.from('players').select('*').eq('room_id', G.roomId);
+  if (!data) return;
+  G.players = data;
+  renderWaitPlayers();
+  const allDone = data.every(p => p.ready);
+  if (allDone) {
+    // Collect all answers
+    const allAnswers = {};
+    data.forEach(p => { allAnswers[p.name] = p.answers || {}; });
+    go('checking');
+    el('chkltr').textContent = G.letter;
+    await runAICheck(allAnswers, data);
+  } else {
+    setTimeout(() => { if (G.isHost) checkIfAllDone(); }, 2000);
+  }
+};
+
+// ── AI Check ─────────────────────────────────────────────────
+const runAICheck = async (allAnswers, players) => {
+  const toCheck = {};
+  G.selCats.forEach(cat => {
+    toCheck[cat] = players.map(p => ({ player: p.name, answer: (allAnswers[p.name]&&allAnswers[p.name][cat]) ? allAnswers[p.name][cat].ans||'' : '' }));
+  });
+
+  const prompt = `שופט ארץ עיר. האות: "${G.letter}".
+כל תשובה: חייבת להתחיל ב${G.letter} ולהיות תקינה לקטגוריה. ריק=false.
+${JSON.stringify(toCheck,null,2)}
+החזר JSON בלבד:
+{"results":{"שם":{"קטגוריה":true}}}`;
+
+  let results = {};
+  try {
+    const res=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const txt=data.content.map(b=>b.text||'').join('');
+    results=JSON.parse(txt.replace(/```json|```/g,'').trim()).results||{};
+  } catch(e) {
+    players.forEach(p=>{
+      results[p.name]={};
+      G.selCats.forEach(cat=>{
+        const a=(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':'';
+        results[p.name][cat]=a.length>0&&a[0]===G.letter;
+      });
+    });
+  }
+
+  // Tally scores
+  players.forEach(p=>{
+    let pts=0;
+    G.selCats.forEach(cat=>{
+      if((results[p.name]||{})[cat]){
+        const d=allAnswers[p.name]&&allAnswers[p.name][cat];
+        pts+=d&&d.isBonus?2:1;
+      }
+    });
+    G.scores[p.name]=(G.scores[p.name]||0)+pts;
+    // Update score in DB
+    sb.from('players').update({score:G.scores[p.name]}).eq('room_id',G.roomId).eq('name',p.name);
+  });
+
+  const isLast = G.round >= G.totalRounds;
+  await pushRoomState({
+    phase: isLast ? 'final' : 'results',
+    round: G.round, letter: G.letter,
+    selCats: G.selCats, totalRounds: G.totalRounds, tlimit: G.tlimit,
+    results, scores: G.scores,
+    allAnswers
+  });
+};
+
+// ── Results ───────────────────────────────────────────────────
+const showResults = async (state) => {
+  const { data: players } = await sb.from('players').select('*').eq('room_id', G.roomId).order('created_at');
+  if (players) G.players = players;
+
+  el('restitle').textContent=`תוצאות סבב ${state.round}`;
+  el('resltr').textContent=state.letter;
+  const allAnswers = state.allAnswers || {};
+  const results = state.results || {};
+
+  let h=`<thead><tr><th>קטגוריה</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
+  G.selCats.forEach(cat=>{
+    h+=`<tr><td style="font-weight:700">${cat}</td>`;
+    G.players.forEach(p=>{
+      const d=allAnswers[p.name]&&allAnswers[p.name][cat];
+      const a=d?d.ans||'':'';
+      const ib=d?d.isBonus:false;
+      const ok=(results[p.name]||{})[cat];
+      if(!a)h+=`<td class="mut">—</td>`;
+      else{const pts=ok?(ib?'<span style="color:var(--gold);font-size:11px"> ⚡+2</span>':'<span style="color:var(--green);font-size:11px"> +1</span>'):'';h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span>${pts}</td>`}
+    });
+    h+='</tr>';
+  });
+  h+=`<tr style="background:#f9fafb"><td style="font-weight:700">סה"כ</td>`;
+  G.players.forEach(p=>{
+    let pts=0;
+    G.selCats.forEach(cat=>{if((results[p.name]||{})[cat]){const d=allAnswers[p.name]&&allAnswers[p.name][cat];pts+=d&&d.isBonus?2:1}});
+    h+=`<td><span style="background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">+${pts}</span></td>`;
+  });
+  h+='</tr></tbody>';
+  el('restbl').innerHTML=h;
+  renderBoard('scoreboard', G.players, state.scores||{});
+
+  const nxt=el('nxtbtn');
+  const gn=el('guest-next');
+  if(G.isHost){
+    nxt.style.display='block';
+    nxt.textContent=state.round<state.totalRounds?`סבב ${state.round+1} ↗`:'תוצאות סופיות ↗';
+    gn.style.display='none';
+  } else {
+    nxt.style.display='none';
+    gn.style.display='block';
+  }
+  go('results');
+};
+
+const nextRound = async () => {
+  if (G.round < G.totalRounds) {
+    await sb.from('players').update({ready:false,answers:{}}).eq('room_id',G.roomId);
+    doStartRound();
+  } else {
+    await pushRoomState({phase:'final',round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:G.scores});
+  }
+};
+
+const renderBoard=(id,players,scores)=>{
+  const sorted=[...players].sort((a,b)=>(scores[b.name]||0)-(scores[a.name]||0));
+  el(id).innerHTML=sorted.map((p,i)=>{
+    const[bg,fg]=AVC[i%AVC.length];
+    const rc=['r1','r2','r3','r4'][i]||'r4';
+    return`<div class="rank-row"><div class="rn ${rc}">${i+1}</div><div class="av" style="background:${bg};color:${fg};width:32px;height:32px">${p.name[0]}</div><span style="flex:1;font-weight:600">${p.name}</span><span class="pscore">${scores[p.name]||0} נק'</span></div>`;
+  }).join('');
+};
+
+const showFinal = async () => {
+  const { data: players } = await sb.from('players').select('*').eq('room_id', G.roomId).order('created_at');
+  if (players) G.players = players;
+  const sorted=[...G.players].sort((a,b)=>(G.scores[b.name]||0)-(G.scores[a.name]||0));
+  const w=sorted[0];
+  el('wincard').innerHTML=w?`<div style="font-size:52px;margin-bottom:10px">🏆</div><div style="font-size:24px;font-weight:900;color:var(--gd)">${w.name}</div><div style="font-size:15px;color:var(--green);margin-top:4px">${G.scores[w.name]||0} נקודות</div>`:'';
+  renderBoard('finalboard', G.players, G.scores);
+  el('again-btn').style.display = G.isHost ? 'block' : 'none';
+  go('final');
+};
+
+const playAgain = async () => {
+  G.round=0; G.scores={};
+  G.players.forEach(p=>G.scores[p.name]=0);
+  await sb.from('players').update({ready:false,answers:{},score:0}).eq('room_id',G.roomId);
+  el('host-settings').style.display='block';
+  el('guest-waiting').style.display='none';
+  renderChips();
+  go('lobby');
+  await pushRoomState({phase:'lobby',round:0,letter:'',catIdx:0,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:{}});
+};
+
+// Poll for players joining lobby & waiting screen updates
+setInterval(async () => {
+  const page = document.querySelector('.page.active');
+  if (!page) return;
+  const id = page.id;
+  if (id==='pg-lobby'||id==='pg-waiting') loadPlayers();
+  if (id==='pg-waiting' && G.isHost) checkIfAllDone();
+}, 3000);
+</script>
+</body>
+</html>
