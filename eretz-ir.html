@@ -192,7 +192,9 @@ td{padding:6px 8px;border-bottom:1px solid var(--brd);vertical-align:middle}
           </div>
         </div>
         <button class="btn btn-p" id="start-btn" onclick="startGame()">התחל משחק ↗</button>
+        <button class="btn" style="margin-top:8px;font-size:13px;color:var(--mut)" onclick="saveDefaults()">💾 שמור קטגוריות כברירת מחדל</button>
         <div id="start-err" class="err tc"></div>
+        <div id="save-ok" style="color:var(--green);font-size:13px;margin-top:6px;text-align:center;display:none">✓ נשמר!</div>
       </div>
     </div>
     <div class="card tc" id="guest-area" style="display:none">
@@ -263,6 +265,39 @@ td{padding:6px 8px;border-bottom:1px solid var(--brd);vertical-align:middle}
       <div class="ct">סטטוס שחקנים</div>
       <div id="wait-players"></div>
     </div>
+    <!-- Host preview of partial answers -->
+    <div id="partial-answers-area" style="display:none">
+      <div class="card" style="border-color:var(--gold);background:var(--goldl)">
+        <div style="font-size:13px;font-weight:700;color:#7d6200;margin-bottom:8px">👀 תצוגה מקדימה — תשובות שהתקבלו עד כה (רק את רואה)</div>
+        <div id="partial-table"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKING - HOST PREVIEW -->
+<div class="page" id="pg-host-review">
+  <div class="hdr"><div class="hdr-t">✅ בדיקה לפני הצגה</div></div>
+  <div class="main">
+    <div class="card" style="background:var(--bl);border-color:var(--blue)">
+      <div style="font-size:14px;color:var(--blue);font-weight:600">רק את רואה את זה! בדקי את התוצאות ותקני לפני שכולם יראו.</div>
+    </div>
+    <div class="card">
+      <div class="ct" id="host-review-sub"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+        <span style="background:#FFF3CD;color:#856404;padding:2px 8px;border-radius:8px;font-size:12px;font-weight:700">🏆 +3</span>
+        <span style="background:var(--goldl);color:var(--gold);padding:2px 8px;border-radius:8px;font-size:12px;font-weight:700">⚡ +2</span>
+        <span style="background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:8px;font-size:12px;font-weight:700">✓ +1</span>
+        <span class="ubadge" style="font-size:12px;padding:2px 8px">⭐ ייחודי +1</span>
+      </div>
+      <div class="dispute-info" style="display:block">✏️ לחץ ✓? או ✗? כדי לשנות לפני שכולם יראו</div>
+      <div class="tbl-wrap"><table id="host-review-tbl"></table></div>
+    </div>
+    <div class="card">
+      <div class="ct">ניקוד מצטבר</div>
+      <div id="host-review-scores"></div>
+    </div>
+    <button class="btn btn-p" style="margin-bottom:13px" onclick="publishResults()">פרסם תוצאות לכולם ↗</button>
   </div>
 </div>
 
@@ -384,6 +419,25 @@ const ptsLabel=pts=>{
   return '';
 };
 
+// ── SAVE / LOAD DEFAULTS ─────────────────────────────────────
+const saveDefaults=()=>{
+  saveKnowledge();
+  const defaults={allCats,selCats:G.selCats,catKnowledge,customCats:[...customCats]};
+  localStorage.setItem('eretz-ir-defaults',JSON.stringify(defaults));
+  const ok=e('save-ok');ok.style.display='block';setTimeout(()=>ok.style.display='none',2000);
+};
+
+const loadDefaults=()=>{
+  try{
+    const saved=JSON.parse(localStorage.getItem('eretz-ir-defaults'));
+    if(!saved)return;
+    if(saved.allCats)allCats=saved.allCats;
+    if(saved.selCats)G.selCats=saved.selCats;
+    if(saved.catKnowledge)catKnowledge=saved.catKnowledge;
+    if(saved.customCats)customCats=new Set(saved.customCats);
+  }catch(e){console.warn('Could not load defaults');}
+};
+
 const setLang=l=>{lang=l;e('lang-he').classList.toggle('on',l==='he');e('lang-en').classList.toggle('on',l==='en');document.documentElement.setAttribute('dir',l==='he'?'rtl':'ltr');G.selCats=l==='he'?['ארץ','עיר','חי','צומח']:['Country','City','Animal','Plant']};
 
 // ── HOME ──────────────────────────────────────────────────────
@@ -425,7 +479,7 @@ const enterLobby=()=>{
   e('room-code').textContent=G.roomId;
   e('host-area').style.display=G.isHost?'block':'none';
   e('guest-area').style.display=G.isHost?'none':'block';
-  if(G.isHost)renderChips();
+  if(G.isHost){loadDefaults();renderChips();}
   currentPhase='lobby';go('lobby');startPolling();
 };
 
@@ -555,9 +609,26 @@ const renderWaitPlayers=()=>{const el=e('wait-players');if(!el)return;el.innerHT
 
 const forceEnd=async()=>{if(!G.isHost)return;const{data}=await sb.from('players').select('*').eq('room_id',G.roomId);if(!data)return;for(const p of data.filter(p=>!p.ready)){await sb.from('players').update({ready:true,answers:{}}).eq('id',p.id)}pollForAllReady()};
 
+const renderPartialAnswers=(players)=>{
+  if(!G.isHost)return;
+  const done=players.filter(p=>p.ready);
+  const pa=e('partial-answers-area');const pt=e('partial-table');
+  if(!pa||!pt)return;
+  if(done.length===0){pa.style.display='none';return;}
+  pa.style.display='block';
+  let h=`<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr><th style="text-align:right;padding:4px 6px;border-bottom:1px solid var(--brd)">קטגוריה</th>${done.map(p=>`<th style="padding:4px 6px;border-bottom:1px solid var(--brd)">${p.name}</th>`).join('')}</tr></thead><tbody>`;
+  G.selCats.forEach(cat=>{
+    h+=`<tr><td style="font-weight:700;padding:4px 6px;border-bottom:1px solid var(--brd)">${cat}</td>`;
+    done.forEach(p=>{const d=(p.answers||{})[cat];const a=d?d.ans||'':'';h+=`<td style="padding:4px 6px;border-bottom:1px solid var(--brd)">${a||'—'}</td>`});
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  pt.innerHTML=h;
+};
+
 const pollForAllReady=async()=>{
   const{data}=await sb.from('players').select('*').eq('room_id',G.roomId);
-  if(!data)return;G.players=data;renderWaitPlayers();
+  if(!data)return;G.players=data;renderWaitPlayers();renderPartialAnswers(data);
   if(data.every(p=>p.ready)){
     stopPolling();const allAnswers={};data.forEach(p=>{allAnswers[p.name]=p.answers||{}});
     currentPhase='checking';e('chkltr').textContent=G.letter;go('checking');await runAI(allAnswers,data);
@@ -633,17 +704,100 @@ ${JSON.stringify(toCheck)}`;
   const uniqueMap={};
   G.selCats.forEach(cat=>{const correct=players.filter(p=>(results[p.name]||{})[cat]);if(correct.length===1){if(!uniqueMap[correct[0].name])uniqueMap[correct[0].name]={};uniqueMap[correct[0].name][cat]=true}});
 
-  players.forEach(p=>{
+  // Scores applied after host review in publishResults()
+
+  const isLast=G.round>=G.totalRounds;
+  // Store pending results — host reviews first before publishing
+  G.pendingResults={results,scores:{...G.scores},allAnswers,uniqueMap,isLast};
+  G.allRoundsData.push({round:G.round,letter:G.letter,allAnswers,results,uniqueMap});
+  showHostReview(results,allAnswers,uniqueMap,isLast);
+};
+
+// Host reviews results before publishing to everyone
+const showHostReview=(results,allAnswers,uniqueMap,isLast)=>{
+  disputeOverrides={};
+  G.results=results;G.currentAllAnswers=allAnswers;G.currentUniqueMap=uniqueMap;
+  e('host-review-sub').textContent=`האות: ${G.letter} — בדקי לפני שכולם יראו`;
+  renderHostReviewTable(results,allAnswers,uniqueMap);
+  renderBoard('host-review-scores',G.players,G.scores);
+  go('pg-host-review');
+};
+
+const renderHostReviewTable=(results,allAnswers,uniqueMap)=>{
+  let h=`<thead><tr><th>קטגוריה</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
+  G.selCats.forEach(cat=>{
+    h+=`<tr><td style="font-weight:700;font-size:12px">${cat}</td>`;
+    G.players.forEach(p=>{
+      const d=allAnswers[p.name]&&allAnswers[p.name][cat];const a=d?d.ans||'':'';
+      const key=`${p.name}|${cat}`;
+      const ok=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:(results[p.name]||{})[cat];
+      const uniq=uniqueMap[p.name]&&uniqueMap[p.name][cat];
+      const bp=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;
+      if(!a){h+=`<td class="mut">—</td>`;return;}
+      const ptsTxt=ok?ptsLabel(bp)+(uniq?' <span class="ubadge">+1⭐</span>':''):'';
+      const dispBtn=`<button class="dispute-btn ${ok?'mark-no':'mark-ok'}" onclick="disputeReview('${p.name.replace(/'/g,"\'")}','${cat.replace(/'/g,"\'")}',${!ok})">${ok?'✗?':'✓?'}</button>`;
+      h+=`<td style="font-size:12px">${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span> ${ptsTxt}${dispBtn}</td>`;
+    });
+    h+='</tr>';
+  });
+  // totals
+  h+=`<tr style="background:#f9fafb"><td style="font-weight:700;font-size:12px">סה"כ</td>`;
+  G.players.forEach(p=>{
     let pts=0;
-    G.selCats.forEach(cat=>{if((results[p.name]||{})[cat]){const d=allAnswers[p.name]&&allAnswers[p.name][cat];pts+=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;if(uniqueMap[p.name]&&uniqueMap[p.name][cat])pts+=1}});
-    G.scores[p.name]=(G.scores[p.name]||0)+pts;
+    G.selCats.forEach(cat=>{const key=`${p.name}|${cat}`;const ok=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:(results[p.name]||{})[cat];if(ok){const d=allAnswers[p.name]&&allAnswers[p.name][cat];pts+=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;if(uniqueMap[p.name]&&uniqueMap[p.name][cat])pts+=1;}});
+    h+=`<td><span style="background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">+${pts}</span></td>`;
+  });
+  h+='</tr></tbody>';
+  e('host-review-tbl').innerHTML=h;
+};
+
+const disputeReview=(playerName,cat,newVal)=>{
+  disputeOverrides[`${playerName}|${cat}`]=newVal;
+  renderHostReviewTable(G.results,G.currentAllAnswers,G.currentUniqueMap);
+  const adjScores={};
+  G.players.forEach(p=>{
+    let orig=0,nw=0;
+    G.selCats.forEach(c=>{
+      const baseOk=(G.results[p.name]||{})[c];
+      const d=G.currentAllAnswers[p.name]&&G.currentAllAnswers[p.name][c];
+      const bp=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;const up=G.currentUniqueMap[p.name]&&G.currentUniqueMap[p.name][c]?1:0;
+      if(baseOk)orig+=bp+up;
+      const key=`${p.name}|${c}`;const nowOk=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:baseOk;
+      if(nowOk)nw+=bp+up;
+    });
+    adjScores[p.name]=(G.scores[p.name]||0)-orig+nw;
+  });
+  renderBoard('host-review-scores',G.players,adjScores);
+};
+
+const publishResults=async()=>{
+  // Apply dispute overrides to results
+  const finalResults={};
+  G.players.forEach(p=>{
+    finalResults[p.name]={};
+    G.selCats.forEach(cat=>{
+      const key=`${p.name}|${cat}`;
+      finalResults[p.name][cat]=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:(G.results[p.name]||{})[cat];
+    });
+  });
+  // Calculate round scores and add to cumulative
+  G.players.forEach(p=>{
+    let roundPts=0;
+    G.selCats.forEach(cat=>{
+      if(finalResults[p.name][cat]){
+        const d=G.currentAllAnswers[p.name]&&G.currentAllAnswers[p.name][cat];
+        roundPts+=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;
+        if(G.currentUniqueMap[p.name]&&G.currentUniqueMap[p.name][cat])roundPts+=1;
+      }
+    });
+    G.scores[p.name]=(G.scores[p.name]||0)+roundPts;
     sb.from('players').update({score:G.scores[p.name]}).eq('room_id',G.roomId).eq('name',p.name);
   });
 
-  const isLast=G.round>=G.totalRounds;currentPhase=isLast?'final':'results';
-  const state={phase:currentPhase,round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results,scores:G.scores,lang,allAnswers,uniqueMap,catKnowledge};
+  const isLast=G.pendingResults?G.pendingResults.isLast:(G.round>=G.totalRounds);
+  currentPhase=isLast?'final':'results';
+  const state={phase:currentPhase,round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:finalResults,scores:G.scores,lang,allAnswers:G.currentAllAnswers,uniqueMap:G.currentUniqueMap,catKnowledge};
   await sb.from('rooms').update({state}).eq('id',G.roomId);
-  G.allRoundsData.push({round:G.round,letter:G.letter,allAnswers,results,uniqueMap});
   if(isLast)showFinal();else showResults(state);
 };
 
