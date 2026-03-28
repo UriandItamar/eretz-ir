@@ -10,6 +10,7 @@
 :root{
   --green:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;--gm:#9FE1CB;
   --pl:#EEEDFE;--pd:#3C3489;--red:#E24B4A;--gold:#F5A623;--goldl:#FFF8E6;
+  --blue:#378ADD;--bl:#E6F1FB;
   --bg:#F5F4F0;--sur:#fff;--brd:rgba(0,0,0,.09);--txt:#1a1a1a;--mut:#6b6b6b;
   --r:14px;--rs:9px
 }
@@ -31,6 +32,8 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);min-he
 .btn-gold{background:var(--gold);color:#fff;border-color:var(--gold);font-size:17px;padding:14px 20px}
 .btn-gold:hover{background:#e0941a}
 .btn-skip{color:var(--mut);background:transparent;border-color:var(--brd);font-size:14px}
+.btn-back{color:var(--blue);background:var(--bl);border-color:var(--blue);font-size:14px}
+.btn-danger{background:#fff0f0;color:var(--red);border-color:#fcc;font-size:14px}
 .btn-lang{padding:8px 16px;font-size:14px;border-radius:20px;width:auto}
 .btn-lang.on{background:var(--green);color:#fff;border-color:var(--green)}
 input[type=text],select{width:100%;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--brd);font-size:15px;font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);outline:none;transition:border .15s}
@@ -47,25 +50,34 @@ input[type=text]:focus,select:focus{border-color:var(--green);background:#fff}
 .presets{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
 .preset{background:var(--sur);border:1px solid var(--brd);border-radius:12px;padding:3px 10px;font-size:12px;cursor:pointer;font-family:'Heebo',sans-serif;color:var(--mut)}
 .preset:hover{color:var(--txt);border-color:var(--green)}
-.cat-hdr{text-align:center;padding:20px 20px 14px;background:var(--sur);border-bottom:1px solid var(--brd)}
-.cat-ctr{font-size:13px;color:var(--mut);margin-bottom:5px}
-.cat-nm{font-size:34px;font-weight:900}
-.let-pill{display:inline-block;background:var(--pl);color:var(--pd);font-size:20px;font-weight:900;padding:4px 18px;border-radius:30px;margin-top:6px;letter-spacing:2px}
-.timer-wrap{display:flex;flex-direction:column;align-items:center;padding:16px 0 8px}
-.ring-wrap{position:relative;width:110px;height:110px;margin-bottom:10px}
+/* Playing */
+.cat-hdr{text-align:center;padding:18px 20px 12px;background:var(--sur);border-bottom:1px solid var(--brd)}
+.cat-ctr{font-size:13px;color:var(--mut);margin-bottom:4px}
+.cat-nm{font-size:32px;font-weight:900}
+.let-pill{display:inline-block;background:var(--pl);color:var(--pd);font-size:18px;font-weight:900;padding:4px 16px;border-radius:30px;margin-top:5px;letter-spacing:2px}
+.timer-wrap{display:flex;flex-direction:column;align-items:center;padding:14px 0 6px}
+.ring-wrap{position:relative;width:100px;height:100px;margin-bottom:8px}
 .ring-wrap svg{transform:rotate(-90deg)}
 .ring-bg{fill:none;stroke:#eee;stroke-width:10}
 .ring-fg{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke .4s}
-.ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900}
-.bonus{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:700}
+.ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900}
+.bonus{display:inline-flex;align-items:center;gap:5px;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:700}
+.b3{background:#FFF3CD;color:#856404}
 .b2{background:var(--goldl);color:var(--gold)}
 .b1{background:var(--gl);color:var(--gd)}
-.ans-area{padding:12px 15px 20px;max-width:580px;margin:0 auto;width:100%}
-.big-inp{font-size:22px;font-weight:700;text-align:center;padding:16px;border-radius:var(--r);border:2px solid var(--brd);background:var(--sur);margin-bottom:12px;width:100%;font-family:'Heebo',sans-serif;color:var(--txt);outline:none;transition:border-color .2s}
+.b0{background:#f5f5f5;color:var(--mut)}
+.ans-area{padding:10px 15px 16px;max-width:580px;margin:0 auto;width:100%}
+.big-inp{font-size:22px;font-weight:700;text-align:center;padding:14px;border-radius:var(--r);border:2px solid var(--brd);background:var(--sur);margin-bottom:10px;width:100%;font-family:'Heebo',sans-serif;color:var(--txt);outline:none;transition:border-color .2s}
 .big-inp:focus{border-color:var(--green)}
-.a-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:var(--rs);background:var(--bg);font-size:14px;margin-bottom:5px}
-.a-cat{color:var(--mut);width:90px;flex-shrink:0;font-size:13px}
-.a-val{flex:1;font-weight:600}
+.btn-row{display:flex;gap:8px}
+.btn-row .btn{flex:1}
+/* Review screen */
+.review-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);background:var(--bg);margin-bottom:8px}
+.review-cat{font-size:13px;color:var(--mut);width:90px;flex-shrink:0}
+.review-inp{flex:1;padding:6px 10px;border-radius:var(--rs);border:1px solid var(--brd);font-size:15px;font-weight:600;font-family:'Heebo',sans-serif;background:var(--sur);color:var(--txt);outline:none}
+.review-inp:focus{border-color:var(--green)}
+.pts-badge{padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700;white-space:nowrap}
+/* Results */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
 th{text-align:right;font-size:11px;color:var(--mut);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--brd)}
@@ -91,9 +103,11 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
 .wd:nth-child(2){animation-delay:.2s}.wd:nth-child(3){animation-delay:.4s}
 @keyframes wp{0%,100%{opacity:.3}50%{opacity:1}}
 .rc{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700}
-.ry{background:var(--gl);color:var(--gd)}.rn2{background:#f0f0f0;color:var(--mut)}
+.ry{background:var(--gl);color:var(--gd)}.rno{background:#f0f0f0;color:var(--mut)}
 .ubadge{background:#FFF3CD;color:#856404;padding:2px 6px;border-radius:8px;font-size:10px;font-weight:700}
-@media(max-width:400px){.sr{flex-direction:column}.cat-nm{font-size:26px}}
+.score-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.score-legend span{padding:3px 10px;border-radius:10px;font-size:12px;font-weight:700}
+@media(max-width:400px){.sr{flex-direction:column}.cat-nm{font-size:26px}.btn-row{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -110,22 +124,24 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
         <button class="btn btn-lang" id="lang-en" onclick="setLang('en')">🇺🇸 English</button>
       </div>
       <div style="margin-bottom:12px">
-        <div class="ilabel" id="lbl-name">השם שלך</div>
+        <div class="ilabel">השם שלך</div>
         <input type="text" id="myname" placeholder="הכנס את שמך..." maxlength="20"/>
       </div>
-      <button class="btn btn-p mb8" onclick="createRoom()">🏠 <span id="btn-create-txt">צור חדר חדש</span></button>
+      <button class="btn btn-p mb8" onclick="createRoom()">🏠 צור חדר חדש</button>
       <div style="margin:10px 0;font-size:13px;color:var(--mut)">— או —</div>
       <div class="ar" style="margin-bottom:0">
         <input type="text" id="joincode" placeholder="קוד חדר..." maxlength="4" style="text-transform:uppercase;letter-spacing:3px;text-align:center;font-weight:700;font-size:18px"/>
-        <button class="btn btn-p btn-sm" onclick="joinRoom()" id="btn-join-txt">הצטרף</button>
+        <button class="btn btn-p btn-sm" onclick="joinRoom()">הצטרף</button>
       </div>
       <div id="home-err" class="err tc"></div>
     </div>
-    <div class="ibox" id="score-info">
-      <strong>⚡ ניקוד:</strong><br>
-      ענית נכון תוך 10 שניות ← <strong style="color:var(--gold)">2 נקודות</strong><br>
-      ענית נכון אחרי 10 שניות ← <strong style="color:var(--green)">1 נקודה</strong><br>
-      רק אתה ענית ← <strong style="color:#856404">+1 בונוס ייחודי ⭐</strong>
+    <div class="ibox">
+      <strong>⚡ ניקוד לפי זמן תגובה:</strong><br>
+      שליש ראשון ← <strong style="color:#856404">3 נקודות</strong><br>
+      שליש שני ← <strong style="color:var(--gold)">2 נקודות</strong><br>
+      שליש שלישי ← <strong style="color:var(--green)">1 נקודה</strong><br>
+      לא ענית ← 0 נקודות<br>
+      רק אתה ענית ← <strong style="color:var(--pd)">+1 בונוס ייחודי ⭐</strong>
     </div>
   </div>
 </div>
@@ -162,7 +178,7 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
             <select id="rnds"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
           </div>
           <div><div class="ilabel">זמן לקטגוריה</div>
-            <select id="tsec"><option value="20">20s</option><option value="30" selected>30s</option><option value="45">45s</option><option value="60">60s</option></select>
+            <select id="tsec"><option value="30">30s</option><option value="45">45s</option><option value="60" selected>60s</option><option value="90">90s</option></select>
           </div>
         </div>
         <button class="btn btn-p" id="start-btn" onclick="startGame()">התחל משחק ↗</button>
@@ -185,28 +201,55 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
   </div>
   <div class="timer-wrap">
     <div class="ring-wrap">
-      <svg width="110" height="110" viewBox="0 0 110 110">
-        <circle class="ring-bg" cx="55" cy="55" r="48"/>
-        <circle class="ring-fg" id="ring" cx="55" cy="55" r="48"/>
+      <svg width="100" height="100" viewBox="0 0 100 100">
+        <circle class="ring-bg" cx="50" cy="50" r="43"/>
+        <circle class="ring-fg" id="ring" cx="50" cy="50" r="43"/>
       </svg>
-      <div class="ring-num" id="rnum">30</div>
+      <div class="ring-num" id="rnum">60</div>
     </div>
-    <div class="bonus b2" id="bonusbadge">⚡ ענה עכשיו = 2 נקודות!</div>
+    <div class="bonus b3" id="bonusbadge">🏆 3 נקודות!</div>
   </div>
   <div class="ans-area">
     <input type="text" class="big-inp" id="ansinp" placeholder="כתוב תשובה..." autocomplete="off" autocorrect="off" autocapitalize="off" onkeydown="if(event.key==='Enter')submitAns()"/>
-    <button class="btn btn-gold" onclick="submitAns()">סיימתי ✓</button>
-    <button class="btn btn-skip" style="margin-top:8px" onclick="skipCat()">דלג →</button>
+    <div class="btn-row mb8">
+      <button class="btn btn-gold" onclick="submitAns()">סיימתי ✓</button>
+      <button class="btn btn-skip" onclick="skipCat()">דלג →</button>
+    </div>
+    <button class="btn btn-back" id="back-btn" onclick="goBack()" style="display:none">← חזור לקטגוריה קודמת</button>
+  </div>
+</div>
+
+<!-- REVIEW -->
+<div class="page" id="pg-review">
+  <div class="hdr"><div class="hdr-t">✏️ בדקו את תשובותיכם</div></div>
+  <div class="main">
+    <div class="card" style="background:var(--bl);border-color:var(--blue)">
+      <div style="font-size:14px;color:var(--blue);font-weight:600">עברתם על כל הקטגוריות! ניתן לערוך תשובות לפני השליחה.</div>
+    </div>
+    <div class="card">
+      <div class="ct">האות: <span id="review-letter"></span></div>
+      <div class="score-legend">
+        <span style="background:#FFF3CD;color:#856404">שליש ראשון = 3נק'</span>
+        <span style="background:var(--goldl);color:var(--gold)">שליש שני = 2נק'</span>
+        <span style="background:var(--gl);color:var(--gd)">שליש שלישי = 1נק'</span>
+      </div>
+      <div id="review-list"></div>
+    </div>
+    <button class="btn btn-p mb8" onclick="submitReview()">שלח תשובות ↗</button>
+    <div class="mut tc" style="font-size:12px">לאחר השליחה לא ניתן לערוך</div>
   </div>
 </div>
 
 <!-- WAITING -->
 <div class="page" id="pg-waiting">
-  <div class="hdr"><div class="hdr-t" id="wait-title">ממתין...</div></div>
+  <div class="hdr">
+    <div class="hdr-t" id="wait-title">ממתין...</div>
+    <button class="btn btn-sm btn-danger" id="force-end-btn" onclick="forceEnd()" style="display:none">סיים סבב עכשיו ⚡</button>
+  </div>
   <div class="main">
     <div class="card tc" style="padding:30px">
       <div style="font-size:36px;margin-bottom:12px">✅</div>
-      <div style="font-size:16px;font-weight:600;margin-bottom:6px">התשובות שלך נשמרו!</div>
+      <div style="font-size:16px;font-weight:600;margin-bottom:6px">התשובות נשמרו!</div>
       <div class="mut" style="margin-bottom:16px">ממתין לשאר השחקנים...</div>
       <div><span class="wd"></span> <span class="wd"></span> <span class="wd"></span></div>
     </div>
@@ -235,6 +278,12 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
   <div class="main">
     <div class="card">
       <div class="ct" id="res-sub"></div>
+      <div class="score-legend">
+        <span style="background:#FFF3CD;color:#856404">🏆 +3</span>
+        <span style="background:var(--goldl);color:var(--gold)">⚡ +2</span>
+        <span style="background:var(--gl);color:var(--gd)">✓ +1</span>
+        <span style="background:#FFF3CD;color:var(--pd)">⭐ ייחודי</span>
+      </div>
       <div class="tbl-wrap"><table id="restbl"></table></div>
     </div>
     <div class="card">
@@ -267,9 +316,7 @@ td{padding:8px;border-bottom:1px solid var(--brd);vertical-align:middle}
     <div class="hdr-t">📋 סיכום המשחק</div>
     <button class="btn btn-sm" onclick="go('final')">← חזור</button>
   </div>
-  <div class="main">
-    <div id="summary-content"></div>
-  </div>
+  <div class="main"><div id="summary-content"></div></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -278,39 +325,49 @@ const SUPA_URL='https://evdkkopgfwdcteomwtaf.supabase.co';
 const SUPA_KEY='sb_publishable_tPdbBFmcSWtOamNIMs07rg_37j_Bi3H';
 const sb=supabase.createClient(SUPA_URL,SUPA_KEY);
 const AI_API='https://api.anthropic.com/v1/messages';
-const CIRC=2*Math.PI*48;
-const BONUS=10;
+const CIRC=2*Math.PI*43;
 const AVC=[['#EEEDFE','#3C3489'],['#E1F5EE','#085041'],['#FAECE7','#712B13'],['#E6F1FB','#0C447C'],['#FAEEDA','#633806'],['#FCEBEB','#791F1F'],['#EAF3DE','#27500A'],['#FBEAF0','#72243E']];
-const HE_LETTERS='אבגדהוזחטיכלמנסעפצקרשת'.split('');
-const EN_LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const HE_LTRS='אבגדהוזחטיכלמנסעפצקרשת'.split('');
+const EN_LTRS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 let lang='he';
 let G={
   myName:'',roomId:'',playerId:'',isHost:false,
   selCats:['ארץ','עיר','חי','צומח'],
-  round:0,totalRounds:3,tlimit:30,letter:'',
+  round:0,totalRounds:3,tlimit:60,letter:'',
   catIdx:0,catAns:{},results:{},scores:{},
   tint:null,tleft:0,players:[],
   allRoundsData:[],pollInt:null
 };
+let currentPhase='lobby';
 
 const e=id=>document.getElementById(id);
 const go=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));e('pg-'+id).classList.add('active');window.scrollTo(0,0)};
 const genCode=()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:4},()=>c[Math.floor(Math.random()*c.length)]).join('')};
-const randLetter=()=>(lang==='he'?HE_LETTERS:EN_LETTERS)[Math.floor(Math.random()*(lang==='he'?HE_LETTERS.length:EN_LETTERS.length))];
+const randLetter=()=>(lang==='he'?HE_LTRS:EN_LTRS)[Math.floor(Math.random()*(lang==='he'?HE_LTRS.length:EN_LTRS.length))];
+
+// Tiered scoring based on time remaining
+const calcPts=(tleft,tlimit)=>{
+  if(tleft<=0)return 0;
+  const third=tlimit/3;
+  if(tleft>tlimit-third)return 3;      // first third
+  if(tleft>tlimit-2*third)return 2;    // second third
+  return 1;                             // last third
+};
+
+const ptsLabel=(pts)=>{
+  if(pts===3)return '<span style="background:#FFF3CD;color:#856404;padding:2px 7px;border-radius:8px;font-size:11px;font-weight:700">🏆+3</span>';
+  if(pts===2)return '<span style="background:var(--goldl);color:var(--gold);padding:2px 7px;border-radius:8px;font-size:11px;font-weight:700">⚡+2</span>';
+  if(pts===1)return '<span style="background:var(--gl);color:var(--gd);padding:2px 7px;border-radius:8px;font-size:11px;font-weight:700">✓+1</span>';
+  return '<span style="background:#f0f0f0;color:var(--mut);padding:2px 7px;border-radius:8px;font-size:11px">✗</span>';
+};
 
 const setLang=l=>{
   lang=l;
   e('lang-he').classList.toggle('on',l==='he');
   e('lang-en').classList.toggle('on',l==='en');
   document.documentElement.setAttribute('dir',l==='he'?'rtl':'ltr');
-  if(l==='en'){
-    G.selCats=['Country','City','Animal','Plant'];
-    e('score-info').innerHTML='<strong>⚡ Scoring:</strong><br>Answer correctly in 10s ← <strong style="color:var(--gold)">2 points</strong><br>Answer correctly after 10s ← <strong style="color:var(--green)">1 point</strong><br>Only you answered ← <strong style="color:#856404">+1 unique bonus ⭐</strong>';
-  } else {
-    G.selCats=['ארץ','עיר','חי','צומח'];
-    e('score-info').innerHTML='<strong>⚡ ניקוד:</strong><br>ענית נכון תוך 10 שניות ← <strong style="color:var(--gold)">2 נקודות</strong><br>ענית נכון אחרי 10 שניות ← <strong style="color:var(--green)">1 נקודה</strong><br>רק אתה ענית ← <strong style="color:#856404">+1 בונוס ייחודי ⭐</strong>';
-  }
+  G.selCats=l==='he'?['ארץ','עיר','חי','צומח']:['Country','City','Animal','Plant'];
 };
 
 // ── HOME ──────────────────────────────────────────────────────
@@ -318,9 +375,8 @@ const createRoom=async()=>{
   const name=e('myname').value.trim();
   if(!name){e('home-err').textContent='נא הכנס שם';return}
   e('home-err').textContent='';
-  G.myName=name;G.isHost=true;G.roomId=genCode();G.allRoundsData=[];
-  G.scores={};
-  const state={phase:'lobby',round:0,letter:'',selCats:G.selCats,totalRounds:3,tlimit:30,results:{},scores:{},lang,allAnswers:{},uniqueMap:{}};
+  G.myName=name;G.isHost=true;G.roomId=genCode();G.allRoundsData=[];G.scores={};
+  const state={phase:'lobby',round:0,letter:'',selCats:G.selCats,totalRounds:3,tlimit:60,results:{},scores:{},lang,allAnswers:{},uniqueMap:{}};
   try{
     await sb.from('rooms').insert({id:G.roomId,host:name,state});
     const{data,error}=await sb.from('players').insert({room_id:G.roomId,name,score:0,ready:false,answers:{}}).select().single();
@@ -358,6 +414,7 @@ const enterLobby=()=>{
   e('host-area').style.display=G.isHost?'block':'none';
   e('guest-area').style.display=G.isHost?'none':'block';
   if(G.isHost)renderChips();
+  currentPhase='lobby';
   go('lobby');
   startPolling();
 };
@@ -366,42 +423,36 @@ const startPolling=()=>{
   if(G.pollInt)clearInterval(G.pollInt);
   G.pollInt=setInterval(pollRoom,2500);
 };
-
 const stopPolling=()=>{if(G.pollInt){clearInterval(G.pollInt);G.pollInt=null}};
 
 const pollRoom=async()=>{
-  // Load players
   const{data:players}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
   if(players){G.players=players;renderLobbyPlayers();renderWaitPlayers();}
-  // Check room state
   const{data:room}=await sb.from('rooms').select('state').eq('id',G.roomId).single();
   if(!room)return;
-  const s=room.state;
-  if(s.phase===G.phase)return; // no change
-  handleState(s);
+  handleState(room.state);
 };
 
-let currentPhase='lobby';
 const handleState=s=>{
   if(s.phase===currentPhase)return;
   currentPhase=s.phase;
   G.selCats=s.selCats||G.selCats;
   G.totalRounds=s.totalRounds||3;
-  G.tlimit=s.tlimit||30;
+  G.tlimit=s.tlimit||60;
   G.scores=s.scores||{};
 
   if(s.phase==='playing'&&s.round!==G.round){
     G.round=s.round;G.letter=s.letter;G.catIdx=0;G.catAns={};
     startCat();
-  } else if(s.phase==='results'){
+  }else if(s.phase==='results'){
     G.results=s.results||{};G.scores=s.scores||{};
     if(G.tint)clearInterval(G.tint);
     if(s.allAnswers)G.allRoundsData.push({round:s.round,letter:s.letter,allAnswers:s.allAnswers,results:s.results,uniqueMap:s.uniqueMap||{}});
     showResults(s);
-  } else if(s.phase==='final'){
+  }else if(s.phase==='final'){
     G.scores=s.scores||{};
     if(G.tint)clearInterval(G.tint);
-    if(s.allAnswers)G.allRoundsData.push({round:s.round,letter:s.letter,allAnswers:s.allAnswers,results:s.results,uniqueMap:s.uniqueMap||{}});
+    if(s.allAnswers&&s.allAnswers[Object.keys(s.allAnswers)[0]])G.allRoundsData.push({round:s.round,letter:s.letter,allAnswers:s.allAnswers,results:s.results,uniqueMap:s.uniqueMap||{}});
     showFinal();
   }
 };
@@ -411,15 +462,13 @@ const renderLobbyPlayers=()=>{
   if(!G.players.length){el.innerHTML='<div class="mut">ממתין לשחקנים...</div>';return}
   el.innerHTML=G.players.map((p,i)=>{
     const[bg,fg]=AVC[i%AVC.length];
-    const me=p.id===G.playerId;
-    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}${me?' (אתה)':''}</span><span class="rc ry">מחובר</span></div>`;
+    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}${p.id===G.playerId?' (אתה)':''}</span><span class="rc ry">מחובר</span></div>`;
   }).join('');
 };
 
 // Category editor
 const defaultCats=()=>lang==='he'?['ארץ','עיר','חי','צומח','דומם','שם פרטי','שם משפחה','מקצוע']:['Country','City','Animal','Plant','Object','First name','Last name','Profession'];
 const presetCats=()=>lang==='he'?['פרי','ירק','צבע','סרט','זמר','ספורטאי','אוכל','ים','הר','נהר','רחוב','כלי נגינה','בגד','פרח','חרק','ספר','שחקן','מדינה','ריהוט']:['Fruit','Vegetable','Color','Movie','Singer','Athlete','Food','Sea','Mountain','River','Street','Instrument','Clothing','Flower','Insect','Book','Actor','Country','Furniture'];
-
 let allCats=defaultCats();
 
 const renderChips=()=>{
@@ -439,10 +488,9 @@ const addCat=()=>{const inp=e('catnew'),n=inp.value.trim();if(!n||allCats.includ
 
 // ── START GAME ────────────────────────────────────────────────
 const startGame=async()=>{
-  const btn=e('start-btn');
   if(G.selCats.length<2){e('start-err').textContent='בחר לפחות 2 קטגוריות';return}
   e('start-err').textContent='';
-  btn.disabled=true;btn.textContent='מתחיל...';
+  const btn=e('start-btn');btn.disabled=true;btn.textContent='מתחיל...';
   G.totalRounds=parseInt(e('rnds').value);
   G.tlimit=parseInt(e('tsec').value);
   G.round=0;G.scores={};G.allRoundsData=[];
@@ -452,11 +500,8 @@ const startGame=async()=>{
 };
 
 const doNextRound=async()=>{
-  G.round++;
-  G.letter=randLetter();
-  G.catIdx=0;G.catAns={};
+  G.round++;G.letter=randLetter();G.catIdx=0;G.catAns={};
   currentPhase='playing';
-  // Reset all players
   await sb.from('players').update({answers:{},ready:false}).eq('room_id',G.roomId);
   const state={phase:'playing',round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results:{},scores:G.scores,lang,allAnswers:{},uniqueMap:{}};
   await sb.from('rooms').update({state}).eq('id',G.roomId);
@@ -471,47 +516,111 @@ const startCat=()=>{
   e('catctr').textContent=`${G.catIdx+1} / ${G.selCats.length}`;
   e('catnm').textContent=cat;
   e('letpill').textContent=G.letter;
-  e('ansinp').value='';
+  // Restore previous answer if coming back
+  const prev=G.catAns[cat];
+  e('ansinp').value=prev?prev.ans:'';
+  // Show back button if not first category
+  e('back-btn').style.display=G.catIdx>0?'block':'none';
   updateRing(G.tleft,G.tlimit);updateBonus(G.tleft);
   go('playing');
   setTimeout(()=>e('ansinp').focus(),120);
   if(G.tint)clearInterval(G.tint);
-  G.tint=setInterval(()=>{G.tleft--;updateRing(G.tleft,G.tlimit);updateBonus(G.tleft);if(G.tleft<=0)submitAns(true)},1000);
+  G.tint=setInterval(()=>{G.tleft--;updateRing(G.tleft,G.tlimit);updateBonus(G.tleft);if(G.tleft<=0)autoSkip()},1000);
 };
 
 const updateRing=(left,total)=>{
   const pct=left/total,r=e('ring');
   r.style.strokeDasharray=CIRC;r.style.strokeDashoffset=CIRC*(1-pct);
-  r.style.stroke=left>BONUS?'#F5A623':left>5?'#1D9E75':'#E24B4A';
+  const third=total/3;
+  r.style.stroke=left>total-third?'#856404':left>total-2*third?'#F5A623':'#1D9E75';
   e('rnum').textContent=left;e('rnum').style.color=left<=5?'#E24B4A':'#1a1a1a';
 };
+
 const updateBonus=left=>{
-  const b=e('bonusbadge');
-  if(left>BONUS){b.className='bonus b2';b.textContent=`⚡ ענה עכשיו = 2 נקודות! (${left-BONUS}s לבונוס)`}
-  else{b.className='bonus b1';b.textContent='✓ עדיין מקבלים נקודה!'}
+  const b=e('bonusbadge');const third=G.tlimit/3;
+  if(left>G.tlimit-third){b.className='bonus b3';b.textContent=`🏆 ${left}s — 3 נקודות!`}
+  else if(left>G.tlimit-2*third){b.className='bonus b2';b.textContent=`⚡ ${left}s — 2 נקודות`}
+  else if(left>0){b.className='bonus b1';b.textContent=`✓ ${left}s — 1 נקודה`}
+  else{b.className='bonus b0';b.textContent='הזמן נגמר'}
 };
 
-const submitAns=async(auto=false)=>{
-  if(G.tint)clearInterval(G.tint);
+const saveCatAns=()=>{
   const cat=G.selCats[G.catIdx];
-  G.catAns[cat]={ans:e('ansinp').value.trim(),isBonus:G.tleft>BONUS};
-  G.catIdx++;
-  if(G.catIdx<G.selCats.length){startCat();}
-  else{await finishRound();}
+  const ans=e('ansinp').value.trim();
+  G.catAns[cat]={ans,tleft:G.tleft,pts:ans?calcPts(G.tleft,G.tlimit):0};
 };
 
-const skipCat=async()=>{
+const submitAns=()=>{
+  if(G.tint)clearInterval(G.tint);
+  saveCatAns();
+  G.catIdx++;
+  if(G.catIdx<G.selCats.length)startCat();
+  else showReview();
+};
+
+const skipCat=()=>{
   if(G.tint)clearInterval(G.tint);
   const cat=G.selCats[G.catIdx];
-  G.catAns[cat]={ans:'',isBonus:false};
+  G.catAns[cat]={ans:'',tleft:0,pts:0};
   G.catIdx++;
-  if(G.catIdx<G.selCats.length){startCat();}
-  else{await finishRound();}
+  if(G.catIdx<G.selCats.length)startCat();
+  else showReview();
+};
+
+const autoSkip=()=>{
+  if(G.tint)clearInterval(G.tint);
+  const cat=G.selCats[G.catIdx];
+  const ans=e('ansinp').value.trim();
+  G.catAns[cat]={ans,tleft:0,pts:ans?1:0}; // auto = last third = 1pt
+  G.catIdx++;
+  if(G.catIdx<G.selCats.length)startCat();
+  else showReview();
+};
+
+const goBack=()=>{
+  if(G.tint)clearInterval(G.tint);
+  saveCatAns();
+  G.catIdx--;
+  startCat();
+};
+
+// ── REVIEW SCREEN ─────────────────────────────────────────────
+const showReview=()=>{
+  e('review-letter').textContent=G.letter;
+  e('review-list').innerHTML=G.selCats.map((cat,i)=>{
+    const d=G.catAns[cat]||{};
+    const pts=d.pts||0;
+    const ptsBadge=pts===3?'<span class="pts-badge" style="background:#FFF3CD;color:#856404">🏆 3נק\'</span>':pts===2?'<span class="pts-badge" style="background:var(--goldl);color:var(--gold)">⚡ 2נק\'</span>':pts===1?'<span class="pts-badge" style="background:var(--gl);color:var(--gd)">✓ 1נק\'</span>':'<span class="pts-badge" style="background:#f0f0f0;color:var(--mut)">—</span>';
+    return`<div class="review-item">
+      <span class="review-cat">${cat}</span>
+      <input class="review-inp" id="review-${i}" type="text" value="${d.ans||''}" placeholder="ריק..." autocomplete="off"/>
+      ${ptsBadge}
+    </div>`;
+  }).join('');
+  go('review');
+};
+
+const submitReview=async()=>{
+  // Collect final answers from review inputs
+  G.selCats.forEach((cat,i)=>{
+    const inp=e(`review-${i}`);
+    const ans=inp?inp.value.trim():'';
+    const existing=G.catAns[cat]||{};
+    G.catAns[cat]={...existing,ans};
+  });
+  await finishRound();
 };
 
 const finishRound=async()=>{
-  await sb.from('players').update({answers:G.catAns,ready:true}).eq('id',G.playerId);
+  // Prepare answers object for DB
+  const answersForDB={};
+  G.selCats.forEach(cat=>{
+    const d=G.catAns[cat]||{};
+    answersForDB[cat]={ans:d.ans||'',tleft:d.tleft||0,pts:d.pts||0};
+  });
+  await sb.from('players').update({answers:answersForDB,ready:true}).eq('id',G.playerId);
   e('wait-title').textContent=`סבב ${G.round} — ממתין לכולם`;
+  e('force-end-btn').style.display=G.isHost?'block':'none';
   go('waiting');
   startPolling();
   if(G.isHost)pollForAllReady();
@@ -521,8 +630,18 @@ const renderWaitPlayers=()=>{
   const el=e('wait-players');if(!el)return;
   el.innerHTML=G.players.map((p,i)=>{
     const[bg,fg]=AVC[i%AVC.length];
-    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}</span><span class="rc ${p.ready?'ry':'rn2'}">${p.ready?'סיים ✓':'ממתין...'}</span></div>`;
+    return`<div class="p-item"><div class="av" style="background:${bg};color:${fg}">${p.name[0]}</div><span style="flex:1;font-size:14px;font-weight:600">${p.name}</span><span class="rc ${p.ready?'ry':'rno'}">${p.ready?'סיים ✓':'ממתין...'}</span></div>`;
   }).join('');
+};
+
+const forceEnd=async()=>{
+  if(!G.isHost)return;
+  // Mark all unready players as ready with empty answers
+  const unready=G.players.filter(p=>!p.ready);
+  for(const p of unready){
+    await sb.from('players').update({ready:true,answers:{}}).eq('id',p.id);
+  }
+  pollForAllReady();
 };
 
 const pollForAllReady=async()=>{
@@ -537,7 +656,7 @@ const pollForAllReady=async()=>{
     e('chkltr').textContent=G.letter;
     go('checking');
     await runAI(allAnswers,data);
-  } else {
+  }else{
     setTimeout(()=>{if(G.isHost)pollForAllReady()},2000);
   }
 };
@@ -548,7 +667,20 @@ const runAI=async(allAnswers,players)=>{
   G.selCats.forEach(cat=>{
     toCheck[cat]=players.map(p=>({player:p.name,answer:(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':''}));
   });
-  const prompt=`You are a judge in a word game. The letter is "${G.letter}". Each answer must START with "${G.letter}" and be valid for its category. Empty = false. Respond JSON only:\n{"results":{"name":{"category":true/false}}}\n\n${JSON.stringify(toCheck)}`;
+  const prompt=`You are a strict judge in a word game. The letter is "${G.letter}".
+Rules:
+1. Answer MUST start with "${G.letter}"
+2. Answer must be a real, valid word for its category
+3. Single letters, single characters, or answers shorter than 2 characters = ALWAYS false
+4. Empty answers = false
+5. Be strict: made-up words, nonsense, or irrelevant answers = false
+
+Respond with JSON only, no other text:
+{"results":{"playerName":{"category":true/false}}}
+
+Answers to check:
+${JSON.stringify(toCheck)}`;
+
   let results={};
   try{
     const res=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},
@@ -556,7 +688,7 @@ const runAI=async(allAnswers,players)=>{
     const d=await res.json();
     results=JSON.parse(d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim()).results||{};
   }catch{
-    players.forEach(p=>{results[p.name]={};G.selCats.forEach(cat=>{const a=(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':'';results[p.name][cat]=a.length>0&&a[0]===G.letter})});
+    players.forEach(p=>{results[p.name]={};G.selCats.forEach(cat=>{const a=(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':'';results[p.name][cat]=a.length>=2&&a[0]===G.letter})});
   }
 
   // Unique bonus
@@ -566,17 +698,18 @@ const runAI=async(allAnswers,players)=>{
     if(correct.length===1){if(!uniqueMap[correct[0].name])uniqueMap[correct[0].name]={};uniqueMap[correct[0].name][cat]=true;}
   });
 
-  // Score
+  // Score with tiered pts
   players.forEach(p=>{
-    let pts=0;
+    let roundPts=0;
     G.selCats.forEach(cat=>{
       if((results[p.name]||{})[cat]){
         const d=allAnswers[p.name]&&allAnswers[p.name][cat];
-        pts+=d&&d.isBonus?2:1;
-        if(uniqueMap[p.name]&&uniqueMap[p.name][cat])pts+=1;
+        const basePts=d&&d.tleft?calcPts(d.tleft,G.tlimit):1;
+        roundPts+=basePts;
+        if(uniqueMap[p.name]&&uniqueMap[p.name][cat])roundPts+=1;
       }
     });
-    G.scores[p.name]=(G.scores[p.name]||0)+pts;
+    G.scores[p.name]=(G.scores[p.name]||0)+roundPts;
     sb.from('players').update({score:G.scores[p.name]}).eq('room_id',G.roomId).eq('name',p.name);
   });
 
@@ -584,7 +717,6 @@ const runAI=async(allAnswers,players)=>{
   currentPhase=isLast?'final':'results';
   const state={phase:currentPhase,round:G.round,letter:G.letter,selCats:G.selCats,totalRounds:G.totalRounds,tlimit:G.tlimit,results,scores:G.scores,lang,allAnswers,uniqueMap};
   await sb.from('rooms').update({state}).eq('id',G.roomId);
-
   G.allRoundsData.push({round:G.round,letter:G.letter,allAnswers,results,uniqueMap});
   if(isLast)showFinal();else showResults(state);
 };
@@ -600,25 +732,28 @@ const showResults=async(s)=>{
   G.selCats.forEach(cat=>{
     h+=`<tr><td style="font-weight:700">${cat}</td>`;
     G.players.forEach(p=>{
-      const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';const ib=d?d.isBonus:false;
+      const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';
       const ok=(res[p.name]||{})[cat];const uniq=um[p.name]&&um[p.name][cat];
+      const basePts=d&&d.tleft?calcPts(d.tleft,G.tlimit):1;
       if(!a)h+=`<td class="mut">—</td>`;
       else{
-        let pts='';
-        if(ok){
-          const base=ib?'<span style="color:var(--gold);font-size:11px">⚡+2</span>':'<span style="color:var(--green);font-size:11px">+1</span>';
-          const u=uniq?'<span class="ubadge">+1⭐</span>':'';
-          pts=` ${base}${u}`;
-        }
-        h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span>${pts}</td>`;
+        const pl2=ok?ptsLabel(basePts)+''+( uniq?'<span class="ubadge">+1⭐</span>':''):'';
+        h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span> ${pl2}</td>`;
       }
     });
     h+='</tr>';
   });
+  // Totals
   h+=`<tr style="background:#f9fafb"><td style="font-weight:700">סה"כ</td>`;
   G.players.forEach(p=>{
     let pts=0;
-    G.selCats.forEach(cat=>{if((res[p.name]||{})[cat]){const d=aa[p.name]&&aa[p.name][cat];pts+=d&&d.isBonus?2:1;if(um[p.name]&&um[p.name][cat])pts+=1;}});
+    G.selCats.forEach(cat=>{
+      if((res[p.name]||{})[cat]){
+        const d=aa[p.name]&&aa[p.name][cat];
+        pts+=d&&d.tleft?calcPts(d.tleft,G.tlimit):1;
+        if(um[p.name]&&um[p.name][cat])pts+=1;
+      }
+    });
     h+=`<td><span style="background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">+${pts}</span></td>`;
   });
   h+='</tr></tbody>';
@@ -626,11 +761,11 @@ const showResults=async(s)=>{
   renderBoard('scoreboard',G.players,s.scores||{});
   const nb=e('nxtbtn'),gn=e('guest-wait-next');
   if(G.isHost){
-    nb.style.display='block';nb.textContent=s.round<s.totalRounds?`סבב ${s.round+1} ↗`:'תוצאות סופיות ↗';
+    nb.style.display='block';
+    nb.textContent=s.round<s.totalRounds?`סבב ${s.round+1} ↗`:'תוצאות סופיות ↗';
     gn.style.display='none';
   }else{nb.style.display='none';gn.style.display='block';}
-  startPolling();
-  go('results');
+  startPolling();go('results');
 };
 
 const nextRound=async()=>{
@@ -675,7 +810,13 @@ const buildSummary=()=>{
     h+=`<thead><tr><th>קטגוריה</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
     G.selCats.forEach(cat=>{
       h+=`<tr><td style="font-weight:700">${cat}</td>`;
-      G.players.forEach(p=>{const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';const ok=(res[p.name]||{})[cat];if(!a)h+=`<td class="mut">—</td>`;else h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span></td>`;});
+      G.players.forEach(p=>{
+        const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';
+        const ok=(res[p.name]||{})[cat];
+        const basePts=d&&d.tleft?calcPts(d.tleft,G.tlimit):1;
+        if(!a)h+=`<td class="mut">—</td>`;
+        else h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span>${ok?' '+ptsLabel(basePts):''}</td>`;
+      });
       h+='</tr>';
     });
     h+='</tbody></table></div></div>';return h;
@@ -687,7 +828,7 @@ const playAgain=async()=>{
   G.players.forEach(p=>G.scores[p.name]=0);
   allCats=defaultCats();G.selCats=allCats.slice(0,4);
   await sb.from('players').update({ready:false,answers:{},score:0}).eq('room_id',G.roomId);
-  await sb.from('rooms').update({state:{phase:'lobby',round:0,letter:'',selCats:G.selCats,totalRounds:3,tlimit:30,results:{},scores:{},lang,allAnswers:{},uniqueMap:{}}}).eq('id',G.roomId);
+  await sb.from('rooms').update({state:{phase:'lobby',round:0,letter:'',selCats:G.selCats,totalRounds:3,tlimit:60,results:{},scores:{},lang,allAnswers:{},uniqueMap:{}}}).eq('id',G.roomId);
   enterLobby();
 };
 </script>
