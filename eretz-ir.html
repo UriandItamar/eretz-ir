@@ -233,8 +233,14 @@ td{padding:6px 8px;border-bottom:1px solid var(--brd);vertical-align:middle}
 
 <!-- REVIEW -->
 <div class="page" id="pg-review">
-  <div class="hdr"><div class="hdr-t">✏️ בדקו את תשובותיכם</div></div>
+  <div class="hdr">
+    <div class="hdr-t">✏️ בדקו את תשובותיכם</div>
+    <div id="review-timer-num" style="font-size:18px;font-weight:900;color:var(--red)"></div>
+  </div>
   <div class="main">
+    <div class="timer-bar-wrap" style="height:6px;background:var(--bg);margin-bottom:12px;border-radius:3px;overflow:hidden">
+      <div id="review-timer-bar" style="height:6px;background:var(--green);border-radius:3px;width:100%;transition:width 1s linear"></div>
+    </div>
     <div class="card" style="background:var(--bl);border-color:var(--blue)">
       <div style="font-size:14px;color:var(--blue);font-weight:600">עברתם על כל הקטגוריות! ניתן לערוך לפני שליחה.</div>
     </div>
@@ -594,8 +600,23 @@ const showReview=()=>{
   e('review-letter').textContent=G.letter;
   e('review-list').innerHTML=G.selCats.map((cat,i)=>{const d=G.catAns[cat]||{};const pts=d.pts||0;const badge=pts===3?'<span class="pts-badge" style="background:#FFF3CD;color:#856404">🏆 3נק\'</span>':pts===2?'<span class="pts-badge" style="background:var(--goldl);color:var(--gold)">⚡ 2נק\'</span>':pts===1?'<span class="pts-badge" style="background:var(--gl);color:var(--gd)">✓ 1נק\'</span>':'<span class="pts-badge" style="background:#f0f0f0;color:var(--mut)">—</span>';return`<div class="review-item"><span class="review-cat">${cat}</span><input class="review-inp" id="review-${i}" type="text" value="${d.ans||''}" placeholder="ריק..." autocomplete="off"/>${badge}</div>`}).join('');
   go('review');
+  if(reviewTimerInt)clearInterval(reviewTimerInt);
+  let reviewLeft=G.tlimit;
+  const tick=()=>{
+    const bar=e('review-timer-bar');const num=e('review-timer-num');
+    if(!bar||!num)return;
+    bar.style.width=((reviewLeft/G.tlimit)*100)+'%';
+    bar.style.background=reviewLeft>10?'var(--green)':'var(--red)';
+    num.textContent=reviewLeft+'s';
+    num.style.color=reviewLeft<=10?'var(--red)':'var(--txt)';
+    if(reviewLeft<=0){clearInterval(reviewTimerInt);submitReview();}
+    reviewLeft--;
+  };
+  tick();
+  reviewTimerInt=setInterval(tick,1000);
 };
-const submitReview=async()=>{G.selCats.forEach((cat,i)=>{const inp=e(`review-${i}`);const ans=inp?inp.value.trim():'';const ex=G.catAns[cat]||{};G.catAns[cat]={...ex,ans}});await finishRound()};
+let reviewTimerInt=null;
+const submitReview=async()=>{if(reviewTimerInt)clearInterval(reviewTimerInt);G.selCats.forEach((cat,i)=>{const inp=e(`review-${i}`);const ans=inp?inp.value.trim():'';const ex=G.catAns[cat]||{};G.catAns[cat]={...ex,ans}});await finishRound()};
 
 const finishRound=async()=>{
   const adb={};G.selCats.forEach(cat=>{const d=G.catAns[cat]||{};adb[cat]={ans:d.ans||'',tleft:d.tleft||0,pts:d.pts||0}});
@@ -720,7 +741,7 @@ const showHostReview=(results,allAnswers,uniqueMap,isLast)=>{
   e('host-review-sub').textContent=`האות: ${G.letter} — בדקי לפני שכולם יראו`;
   renderHostReviewTable(results,allAnswers,uniqueMap);
   renderBoard('host-review-scores',G.players,G.scores);
-  go('pg-host-review');
+  go('host-review');
 };
 
 const renderHostReviewTable=(results,allAnswers,uniqueMap)=>{
