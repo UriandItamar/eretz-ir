@@ -413,7 +413,7 @@ let currentPhase='lobby';
 let disputeOverrides={};
 
 const e=id=>document.getElementById(id);
-const go=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));e('pg-'+id).classList.add('active');window.scrollTo(0,0)};
+const go=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const pg=e('pg-'+id)||e(id);if(pg)pg.classList.add('active');window.scrollTo(0,0)};
 const genCode=()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:4},()=>c[Math.floor(Math.random()*c.length)]).join('')};
 const randLetter=()=>(lang==='he'?HE_LTRS:EN_LTRS)[Math.floor(Math.random()*(lang==='he'?HE_LTRS.length:EN_LTRS.length))];
 
@@ -698,7 +698,7 @@ ${JSON.stringify(toCheck)}`;
   let results={};
   let aiWorked=false;
   try{
-    const res=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})});
     const d=await res.json();
     if(d.error){throw new Error(d.error.message);}
     const txt=d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
