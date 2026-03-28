@@ -36,9 +36,9 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);min-he
 .btn-danger{background:#fff0f0;color:var(--red);border-color:#fcc;font-size:13px;padding:7px 14px;width:auto}
 .btn-lang{padding:8px 16px;font-size:14px;border-radius:20px;width:auto}
 .btn-lang.on{background:var(--green);color:#fff;border-color:var(--green)}
-input[type=text],select,textarea{width:100%;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--brd);font-size:15px;font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);outline:none;transition:border .15s}
+input[type=text],select,textarea{width:100%;padding:10px 14px;border-radius:var(--rs);border:1px solid var(--brd);font-size:14px;font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);outline:none;transition:border .15s}
 input[type=text]:focus,select:focus,textarea:focus{border-color:var(--green);background:#fff}
-textarea{resize:vertical;min-height:60px;font-size:13px}
+textarea{resize:vertical;min-height:56px;line-height:1.5}
 .ilabel{font-size:13px;color:var(--mut);margin-bottom:5px}
 .p-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--rs);background:var(--bg);margin-bottom:6px}
 .av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
@@ -51,10 +51,12 @@ textarea{resize:vertical;min-height:60px;font-size:13px}
 .presets{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
 .preset{background:var(--sur);border:1px solid var(--brd);border-radius:12px;padding:3px 10px;font-size:12px;cursor:pointer;font-family:'Heebo',sans-serif;color:var(--mut)}
 .preset:hover{color:var(--txt);border-color:var(--green)}
-/* Custom cat knowledge */
-.cat-knowledge{background:var(--bg);border-radius:var(--rs);padding:10px;margin-top:6px;border:1px solid var(--brd)}
-.cat-knowledge-label{font-size:11px;color:var(--mut);margin-bottom:4px}
-.cat-knowledge textarea{font-size:12px;min-height:48px;padding:6px 10px}
+/* Knowledge area */
+.know-area{background:var(--goldl);border:1px solid #f5d080;border-radius:var(--rs);padding:12px;margin-bottom:10px}
+.know-row{margin-bottom:10px}
+.know-row:last-child{margin-bottom:0}
+.know-label{font-size:13px;font-weight:700;color:#7d6200;margin-bottom:4px}
+.know-hint{font-size:11px;color:#a07800;margin-bottom:5px}
 /* Playing */
 .cat-hdr{text-align:center;padding:16px 20px 10px;background:var(--sur);border-bottom:1px solid var(--brd)}
 .cat-ctr{font-size:13px;color:var(--mut);margin-bottom:4px}
@@ -76,21 +78,19 @@ textarea{resize:vertical;min-height:60px;font-size:13px}
 .big-inp:focus{border-color:var(--green)}
 .btn-row{display:flex;gap:8px;margin-bottom:8px}
 .btn-row .btn{flex:1}
-/* Review */
 .review-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);background:var(--bg);margin-bottom:8px}
 .review-cat{font-size:13px;color:var(--mut);width:85px;flex-shrink:0}
 .review-inp{flex:1;padding:6px 10px;border-radius:var(--rs);border:1px solid var(--brd);font-size:15px;font-weight:600;font-family:'Heebo',sans-serif;background:var(--sur);color:var(--txt);outline:none}
 .review-inp:focus{border-color:var(--green)}
 .pts-badge{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
-/* Results table with dispute */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
 th{text-align:right;font-size:11px;color:var(--mut);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--brd)}
 td{padding:6px 8px;border-bottom:1px solid var(--brd);vertical-align:middle}
 .ok{color:var(--green);font-weight:700}
 .no{color:var(--red)}
-.dispute-btn{background:none;border:1px solid var(--brd);border-radius:6px;padding:2px 6px;font-size:11px;cursor:pointer;font-family:'Heebo',sans-serif;color:var(--mut);transition:all .15s;white-space:nowrap}
-.dispute-btn:hover{background:var(--bg);color:var(--txt)}
+.dispute-btn{background:none;border:1px solid var(--brd);border-radius:6px;padding:2px 5px;font-size:11px;cursor:pointer;font-family:'Heebo',sans-serif;color:var(--mut);white-space:nowrap;margin-right:2px}
+.dispute-btn:hover{background:var(--bg)}
 .dispute-btn.mark-ok{border-color:var(--green);color:var(--green)}
 .dispute-btn.mark-no{border-color:var(--red);color:var(--red)}
 .rank-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);margin-bottom:6px;background:var(--bg)}
@@ -173,13 +173,13 @@ td{padding:6px 8px;border-bottom:1px solid var(--brd);vertical-align:middle}
         <div style="font-size:12px;color:var(--mut);margin-bottom:8px" id="catcnt"></div>
         <div class="chips" id="chips"></div>
         <div class="mut mb8" style="font-size:12px">לחץ לבחירה/ביטול · ✕ למחיקה</div>
-        <!-- Custom category knowledge section -->
-        <div id="custom-knowledge-area"></div>
         <div class="ar">
           <input type="text" id="catnew" placeholder="הוסף קטגוריה..." maxlength="30" onkeydown="if(event.key==='Enter')addCat()"/>
           <button class="btn btn-p btn-sm" onclick="addCat()">+ הוסף</button>
         </div>
         <div class="presets" id="presets"></div>
+        <!-- Knowledge fields appear here -->
+        <div id="know-area"></div>
       </div>
       <div class="card">
         <div class="ct">הגדרות</div>
@@ -234,7 +234,7 @@ td{padding:6px 8px;border-bottom:1px solid var(--brd);vertical-align:middle}
   <div class="hdr"><div class="hdr-t">✏️ בדקו את תשובותיכם</div></div>
   <div class="main">
     <div class="card" style="background:var(--bl);border-color:var(--blue)">
-      <div style="font-size:14px;color:var(--blue);font-weight:600">עברתם על כל הקטגוריות! ניתן לערוך תשובות לפני שליחה.</div>
+      <div style="font-size:14px;color:var(--blue);font-weight:600">עברתם על כל הקטגוריות! ניתן לערוך לפני שליחה.</div>
     </div>
     <div class="card">
       <div class="ct">האות: <span id="review-letter"></span></div>
@@ -291,7 +291,7 @@ td{padding:6px 8px;border-bottom:1px solid var(--brd);vertical-align:middle}
         <span class="ubadge" style="font-size:12px;padding:2px 8px">⭐ ייחודי +1</span>
       </div>
       <div class="dispute-info" id="dispute-info" style="display:none">
-        ✏️ מארח בלבד: לחץ על ✓/✗ כדי לשנות ניקוד
+        ✏️ מארח: לחץ ✓? או ✗? כדי לשנות ניקוד
       </div>
       <div class="tbl-wrap"><table id="restbl"></table></div>
     </div>
@@ -340,8 +340,10 @@ const HE_LTRS='אבגדהוזחטיכלמנסעפצקרשת'.split('');
 const EN_LTRS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 let lang='he';
-// catKnowledge: { catName: "comma separated valid answers" }
+// catKnowledge: { catName: "valid answers string" }
 let catKnowledge={};
+// Which cats are "custom" (user-added, not from presets)
+let customCats=new Set();
 
 let G={
   myName:'',roomId:'',playerId:'',isHost:false,
@@ -351,10 +353,10 @@ let G={
   results:{},scores:{},
   tint:null,tleft:0,players:[],
   allRoundsData:[],pollInt:null,
-  // For dispute tracking in current results
   currentAllAnswers:{},currentUniqueMap:{}
 };
 let currentPhase='lobby';
+let disputeOverrides={};
 
 const e=id=>document.getElementById(id);
 const go=id=>{document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));e('pg-'+id).classList.add('active');window.scrollTo(0,0)};
@@ -363,12 +365,11 @@ const randLetter=()=>(lang==='he'?HE_LTRS:EN_LTRS)[Math.floor(Math.random()*(lan
 
 const calcPts=(tleft,tlimit)=>{
   if(!tleft||tleft<=0)return 0;
-  const third=tlimit/3;
-  if(tleft>tlimit-third)return 3;
-  if(tleft>tlimit-2*third)return 2;
+  const t=tlimit/3;
+  if(tleft>tlimit-t)return 3;
+  if(tleft>tlimit-2*t)return 2;
   return 1;
 };
-
 const ptsLabel=pts=>{
   if(pts===3)return '<span style="background:#FFF3CD;color:#856404;padding:1px 6px;border-radius:6px;font-size:11px;font-weight:700">🏆+3</span>';
   if(pts===2)return '<span style="background:var(--goldl);color:var(--gold);padding:1px 6px;border-radius:6px;font-size:11px;font-weight:700">⚡+2</span>';
@@ -452,7 +453,7 @@ const handleState=s=>{
   G.totalRounds=s.totalRounds||3;
   G.tlimit=s.tlimit||60;
   G.scores=s.scores||{};
-  catKnowledge=s.catKnowledge||catKnowledge;
+  if(s.catKnowledge)catKnowledge=s.catKnowledge;
   if(s.phase==='playing'&&s.round!==G.round){
     G.round=s.round;G.letter=s.letter;G.catIdx=0;G.catAns={};G.catTimeLeft={};
     startCat();
@@ -478,13 +479,10 @@ const renderLobbyPlayers=()=>{
   }).join('');
 };
 
-// ── CATEGORY EDITOR with knowledge ───────────────────────────
+// ── CATEGORY EDITOR ───────────────────────────────────────────
 const defaultCats=()=>lang==='he'?['ארץ','עיר','חי','צומח','דומם','שם פרטי','שם משפחה','מקצוע']:['Country','City','Animal','Plant','Object','First name','Last name','Profession'];
 const presetCats=()=>lang==='he'?['פרי','ירק','צבע','סרט','זמר','ספורטאי','אוכל','ים','הר','נהר','רחוב','כלי נגינה','בגד','פרח','חרק','ספר','שחקן','מדינה','ריהוט']:['Fruit','Vegetable','Color','Movie','Singer','Athlete','Food','Sea','Mountain','River','Street','Instrument','Clothing','Flower','Insect','Book','Actor','Country','Furniture'];
 let allCats=defaultCats();
-
-// Standard categories that don't need custom knowledge
-const standardCats=new Set(['ארץ','עיר','חי','צומח','דומם','שם פרטי','שם משפחה','מקצוע','Country','City','Animal','Plant','Object','First name','Last name','Profession','פרי','ירק','צבע','סרט','זמר','ספורטאי','אוכל','ים','הר','נהר','רחוב','כלי נגינה','בגד','פרח','חרק','ספר','שחקן','מדינה','ריהוט','Fruit','Vegetable','Color','Movie','Singer','Athlete','Food','Sea','Mountain','River','Street','Instrument','Clothing','Flower','Insect','Book','Actor','Furniture']);
 
 const renderChips=()=>{
   if(!allCats.length)allCats=defaultCats();
@@ -494,43 +492,66 @@ const renderChips=()=>{
     const on=G.selCats.includes(cat);
     return`<div class="chip${on?' on':''}" onclick="togCat('${cat}')"><span>${cat}</span><button class="x" onclick="event.stopPropagation();rmCat('${cat}')">✕</button></div>`;
   }).join('');
-  // Show knowledge fields only for custom (non-standard) selected categories
-  const customSelected=G.selCats.filter(c=>!standardCats.has(c));
-  const kArea=e('custom-knowledge-area');
-  if(customSelected.length>0){
-    kArea.innerHTML=`<div style="margin-bottom:10px;padding:10px;background:var(--goldl);border-radius:var(--rs);border:1px solid #f5d080;">
-      <div style="font-size:13px;font-weight:700;color:#7d6200;margin-bottom:8px">📝 הוסיפי תשובות תקינות לקטגוריות המותאמות אישית (ה-AI ישתמש בהן):</div>
-      ${customSelected.map(cat=>`
-        <div style="margin-bottom:8px;">
-          <div style="font-size:13px;font-weight:600;margin-bottom:4px">${cat}</div>
-          <textarea id="know-${cat.replace(/\s/g,'_')}" placeholder="כתבי תשובות תקינות מופרדות בפסיקים, למשל: מיכל, דנה, נועה, תמר..." rows="2">${catKnowledge[cat]||''}</textarea>
-        </div>
-      `).join('')}
-    </div>`;
-  }else{
-    kArea.innerHTML='';
-  }
   e('presets').innerHTML=avail.slice(0,14).map(c=>`<button class="preset" onclick="addPre('${c}')">${c}</button>`).join('');
+  renderKnowledgeArea();
 };
+
+const renderKnowledgeArea=()=>{
+  // Show knowledge fields for ALL selected custom categories
+  const customSelected=G.selCats.filter(c=>customCats.has(c));
+  const ka=e('know-area');
+  if(!ka)return;
+  if(customSelected.length===0){ka.innerHTML='';return}
+  
+  // Save current values before re-render
+  customSelected.forEach(cat=>{
+    const key='know_'+encodeKey(cat);
+    const field=e(key);
+    if(field)catKnowledge[cat]=field.value;
+  });
+
+  ka.innerHTML=`<div class="know-area" style="margin-top:12px">
+    <div style="font-size:13px;font-weight:700;color:#7d6200;margin-bottom:10px">📝 הוסיפי תשובות תקינות לקטגוריות שהוספת — ה-AI ישתמש בהן:</div>
+    ${customSelected.map(cat=>`
+      <div class="know-row">
+        <div class="know-label">${cat}</div>
+        <div class="know-hint">הכניסי תשובות תקינות מופרדות בפסיקים</div>
+        <textarea id="know_${encodeKey(cat)}" placeholder="לדוגמה: מיטל, דנה, נועה, תמר, גבי...">${catKnowledge[cat]||''}</textarea>
+      </div>
+    `).join('')}
+  </div>`;
+};
+
+const encodeKey=cat=>cat.replace(/[^a-zA-Z\u0590-\u05FF0-9]/g,'_');
 
 const togCat=cat=>{
   if(G.selCats.includes(cat))G.selCats=G.selCats.filter(c=>c!==cat);
   else G.selCats.push(cat);
-  saveKnowledgeFromFields();
   renderChips();
 };
-const rmCat=cat=>{allCats=allCats.filter(c=>c!==cat);G.selCats=G.selCats.filter(c=>c!==cat);delete catKnowledge[cat];renderChips()};
-const addPre=cat=>{if(!allCats.includes(cat)){allCats.push(cat);G.selCats.push(cat);renderChips()}};
+const rmCat=cat=>{
+  allCats=allCats.filter(c=>c!==cat);
+  G.selCats=G.selCats.filter(c=>c!==cat);
+  customCats.delete(cat);
+  delete catKnowledge[cat];
+  renderChips();
+};
+const addPre=cat=>{
+  if(!allCats.includes(cat)){allCats.push(cat);G.selCats.push(cat);renderChips();}
+};
 const addCat=()=>{
   const inp=e('catnew'),n=inp.value.trim();
   if(!n||allCats.includes(n)){inp.value='';return}
-  allCats.push(n);G.selCats.push(n);inp.value='';renderChips();
+  allCats.push(n);
+  G.selCats.push(n);
+  customCats.add(n); // Mark as custom
+  inp.value='';
+  renderChips();
 };
 
-const saveKnowledgeFromFields=()=>{
-  const customSelected=G.selCats.filter(c=>!standardCats.has(c));
-  customSelected.forEach(cat=>{
-    const field=e('know-'+cat.replace(/\s/g,'_'));
+const saveKnowledge=()=>{
+  G.selCats.filter(c=>customCats.has(c)).forEach(cat=>{
+    const field=e('know_'+encodeKey(cat));
     if(field)catKnowledge[cat]=field.value.trim();
   });
 };
@@ -539,7 +560,7 @@ const saveKnowledgeFromFields=()=>{
 const startGame=async()=>{
   if(G.selCats.length<2){e('start-err').textContent='בחר לפחות 2 קטגוריות';return}
   e('start-err').textContent='';
-  saveKnowledgeFromFields();
+  saveKnowledge();
   const btn=e('start-btn');btn.disabled=true;btn.textContent='מתחיל...';
   G.totalRounds=parseInt(e('rnds').value);
   G.tlimit=parseInt(e('tsec').value);
@@ -562,8 +583,8 @@ const doNextRound=async()=>{
 const startCat=()=>{
   stopPolling();
   const cat=G.selCats[G.catIdx];
-  const savedTime=G.catTimeLeft[cat];
-  G.tleft=savedTime!==undefined?savedTime:G.tlimit;
+  const saved=G.catTimeLeft[cat];
+  G.tleft=saved!==undefined?saved:G.tlimit;
   e('catctr').textContent=`${G.catIdx+1} / ${G.selCats.length}`;
   e('catnm').textContent=cat;
   e('letpill').textContent=G.letter;
@@ -585,15 +606,15 @@ const startCat=()=>{
 const updateRing=(left,total)=>{
   const pct=left/total,r=e('ring');
   r.style.strokeDasharray=CIRC;r.style.strokeDashoffset=CIRC*(1-pct);
-  const third=total/3;
-  r.style.stroke=left>total-third?'#856404':left>total-2*third?'#F5A623':'#1D9E75';
+  const t=total/3;
+  r.style.stroke=left>total-t?'#856404':left>total-2*t?'#F5A623':'#1D9E75';
   e('rnum').textContent=left;e('rnum').style.color=left<=5?'#E24B4A':'#1a1a1a';
 };
 
 const updateBonus=left=>{
-  const b=e('bonusbadge');const third=G.tlimit/3;
-  if(left>G.tlimit-third){b.className='bonus b3';b.textContent=`🏆 ${left}s — 3 נקודות!`}
-  else if(left>G.tlimit-2*third){b.className='bonus b2';b.textContent=`⚡ ${left}s — 2 נקודות`}
+  const b=e('bonusbadge');const t=G.tlimit/3;
+  if(left>G.tlimit-t){b.className='bonus b3';b.textContent=`🏆 ${left}s — 3 נקודות!`}
+  else if(left>G.tlimit-2*t){b.className='bonus b2';b.textContent=`⚡ ${left}s — 2 נקודות`}
   else if(left>0){b.className='bonus b1';b.textContent=`✓ ${left}s — 1 נקודה`}
   else{b.className='bonus b0';b.textContent='הזמן נגמר'}
 };
@@ -606,7 +627,7 @@ const saveCurrent=()=>{
 };
 
 const submitAns=()=>{if(G.tint)clearInterval(G.tint);saveCurrent();G.catIdx++;if(G.catIdx<G.selCats.length)startCat();else showReview()};
-const skipCat=()=>{if(G.tint)clearInterval(G.tint);const cat=G.selCats[G.catIdx];G.catAns[cat]={ans:'',tleft:0,pts:0};G.catIdx++;if(G.catIdx<G.selCats.length)startCat();else showReview()};
+const skipCat=()=>{if(G.tint)clearInterval(G.tint);G.catAns[G.selCats[G.catIdx]]={ans:'',tleft:0,pts:0};G.catIdx++;if(G.catIdx<G.selCats.length)startCat();else showReview()};
 const autoSkip=()=>{if(G.tint)clearInterval(G.tint);const cat=G.selCats[G.catIdx];const ans=e('ansinp').value.trim();G.catAns[cat]={ans,tleft:0,pts:ans?1:0};G.catIdx++;if(G.catIdx<G.selCats.length)startCat();else showReview()};
 const goBack=()=>{if(G.tint)clearInterval(G.tint);saveCurrent();G.catIdx--;startCat()};
 
@@ -622,14 +643,14 @@ const showReview=()=>{
 };
 
 const submitReview=async()=>{
-  G.selCats.forEach((cat,i)=>{const inp=e(`review-${i}`);const ans=inp?inp.value.trim():'';const existing=G.catAns[cat]||{};G.catAns[cat]={...existing,ans}});
+  G.selCats.forEach((cat,i)=>{const inp=e(`review-${i}`);const ans=inp?inp.value.trim():'';const ex=G.catAns[cat]||{};G.catAns[cat]={...ex,ans}});
   await finishRound();
 };
 
 const finishRound=async()=>{
-  const answersForDB={};
-  G.selCats.forEach(cat=>{const d=G.catAns[cat]||{};answersForDB[cat]={ans:d.ans||'',tleft:d.tleft||0,pts:d.pts||0}});
-  await sb.from('players').update({answers:answersForDB,ready:true}).eq('id',G.playerId);
+  const adb={};
+  G.selCats.forEach(cat=>{const d=G.catAns[cat]||{};adb[cat]={ans:d.ans||'',tleft:d.tleft||0,pts:d.pts||0}});
+  await sb.from('players').update({answers:adb,ready:true}).eq('id',G.playerId);
   e('wait-title').textContent=`סבב ${G.round} — ממתין לכולם`;
   e('force-end-box').style.display=G.isHost?'flex':'none';
   go('waiting');startPolling();
@@ -664,35 +685,32 @@ const pollForAllReady=async()=>{
   }else{setTimeout(()=>{if(G.isHost)pollForAllReady()},2000)}
 };
 
-// ── AI CHECK with custom knowledge ───────────────────────────
+// ── AI ────────────────────────────────────────────────────────
 const runAI=async(allAnswers,players)=>{
   const toCheck={};
   G.selCats.forEach(cat=>{
     toCheck[cat]=players.map(p=>({player:p.name,answer:(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':''}));
   });
 
-  // Build custom knowledge instructions
-  const customKnowledgeText=Object.entries(catKnowledge)
+  const customRules=Object.entries(catKnowledge)
     .filter(([cat,vals])=>G.selCats.includes(cat)&&vals&&vals.trim())
-    .map(([cat,vals])=>`- Category "${cat}": The ONLY valid answers are: ${vals}`)
+    .map(([cat,vals])=>`- "${cat}": valid answers are ONLY: ${vals}`)
     .join('\n');
 
-  const prompt=`You are a STRICT judge in a word game called "Eretz Ir". The letter for this round is "${G.letter}".
+  const prompt=`You are a STRICT judge in the word game "Eretz Ir". The letter is "${G.letter}".
 
-GENERAL RULES:
-1. Answer MUST start with the letter "${G.letter}" (case-insensitive for English, first letter must match for Hebrew)
-2. Answer must be a REAL, WELL-KNOWN word/name that clearly belongs to its category
-3. Answers shorter than 2 characters = ALWAYS false
-4. Gibberish, nonsense, joke answers = false
-5. Empty answers = false
-6. Be strict — when in doubt, mark false
+RULES:
+1. Answer MUST start with "${G.letter}"
+2. Must be real and clearly belong to the category
+3. Fewer than 2 characters = always false
+4. Gibberish/nonsense = false
+5. Empty = false
+${customRules?`\nCUSTOM CATEGORIES (only these answers are valid, must still start with "${G.letter}"):\n${customRules}`:''}
 
-${customKnowledgeText?`CUSTOM CATEGORY RULES (override general rules for these categories):\n${customKnowledgeText}\nFor these custom categories, ONLY answers in the provided list are valid (and they must still start with "${G.letter}").`:''}
-
-Respond with JSON ONLY:
+Return JSON only:
 {"results":{"playerName":{"category":true/false}}}
 
-Answers to check:
+Answers:
 ${JSON.stringify(toCheck)}`;
 
   let results={};
@@ -705,14 +723,12 @@ ${JSON.stringify(toCheck)}`;
     players.forEach(p=>{results[p.name]={};G.selCats.forEach(cat=>{const a=(allAnswers[p.name]&&allAnswers[p.name][cat])?allAnswers[p.name][cat].ans||'':'';results[p.name][cat]=a.length>=2&&a[0]===G.letter})});
   }
 
-  // Unique bonus
   const uniqueMap={};
   G.selCats.forEach(cat=>{
     const correct=players.filter(p=>(results[p.name]||{})[cat]);
     if(correct.length===1){if(!uniqueMap[correct[0].name])uniqueMap[correct[0].name]={};uniqueMap[correct[0].name][cat]=true}
   });
 
-  // Score
   players.forEach(p=>{
     let pts=0;
     G.selCats.forEach(cat=>{
@@ -735,58 +751,48 @@ ${JSON.stringify(toCheck)}`;
 };
 
 // ── RESULTS with dispute ──────────────────────────────────────
-// Local dispute overrides: { "playerName|cat": true/false }
-let disputeOverrides={};
-
 const showResults=async(s)=>{
   const{data:pl}=await sb.from('players').select('*').eq('room_id',G.roomId).order('created_at');
   if(pl)G.players=pl;
   G.currentAllAnswers=s.allAnswers||{};
   G.currentUniqueMap=s.uniqueMap||{};
+  G.results=s.results||{};
   disputeOverrides={};
   renderResultsTable(s);
   renderBoard('scoreboard',G.players,s.scores||{});
   const nb=e('nxtbtn'),gn=e('guest-wait-next');
-  if(G.isHost){
-    nb.style.display='block';
-    nb.textContent=s.round<s.totalRounds?`סבב ${s.round+1} ↗`:'תוצאות סופיות ↗';
-    gn.style.display='none';
-    e('dispute-info').style.display='block';
-  }else{nb.style.display='none';gn.style.display='block';e('dispute-info').style.display='none';}
+  if(G.isHost){nb.style.display='block';nb.textContent=s.round<s.totalRounds?`סבב ${s.round+1} ↗`:'תוצאות סופיות ↗';gn.style.display='none';e('dispute-info').style.display='block';}
+  else{nb.style.display='none';gn.style.display='block';e('dispute-info').style.display='none';}
   startPolling();go('results');
 };
 
 const renderResultsTable=(s)=>{
-  const aa=s.allAnswers||G.currentAllAnswers;
-  const baseResults=s.results||G.results;
-  const um=s.uniqueMap||G.currentUniqueMap;
+  const aa=G.currentAllAnswers,res=G.results,um=G.currentUniqueMap;
   e('restitle').textContent=`תוצאות סבב ${s.round||G.round}`;
   e('res-sub').textContent=`האות: ${s.letter||G.letter}`;
-
   let h=`<thead><tr><th>קטגוריה</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
   G.selCats.forEach(cat=>{
     h+=`<tr><td style="font-weight:700;font-size:12px">${cat}</td>`;
     G.players.forEach(p=>{
       const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';
       const key=`${p.name}|${cat}`;
-      const ok=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:(baseResults[p.name]||{})[cat];
+      const ok=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:(res[p.name]||{})[cat];
       const uniq=um[p.name]&&um[p.name][cat];
       const basePts=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;
-      if(!a){h+=`<td class="mut">—</td>`;return}
+      if(!a){h+=`<td class="mut" style="font-size:12px">—</td>`;return}
       const ptsTxt=ok?ptsLabel(basePts)+(uniq?' <span class="ubadge">+1⭐</span>':''):'';
-      const disputeBtn=G.isHost?`<button class="dispute-btn ${ok?'mark-no':'mark-ok'}" onclick="dispute('${p.name}','${cat}',${!ok})" title="${ok?'סמן כשגוי':'סמן כנכון'}">${ok?'✗?':'✓?'}</button>`:'';
-      h+=`<td style="font-size:12px">${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span> ${ptsTxt} ${disputeBtn}</td>`;
+      const dispBtn=G.isHost?`<button class="dispute-btn ${ok?'mark-no':'mark-ok'}" onclick="dispute('${p.name.replace(/'/g,"\\'")}','${cat.replace(/'/g,"\\'")}',${!ok})">${ok?'✗?':'✓?'}</button>`:'';
+      h+=`<td style="font-size:12px">${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span> ${ptsTxt}${dispBtn}</td>`;
     });
     h+='</tr>';
   });
-  // Totals
   h+=`<tr style="background:#f9fafb"><td style="font-weight:700;font-size:12px">סה"כ</td>`;
   G.players.forEach(p=>{
     let pts=0;
     G.selCats.forEach(cat=>{
       const key=`${p.name}|${cat}`;
-      const ok=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:(baseResults[p.name]||{})[cat];
-      if(ok){const d=aa[p.name]&&aa[p.name][cat];pts+=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;if(um[p.name]&&um[p.name][cat])pts+=1;}
+      const ok=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:(res[p.name]||{})[cat];
+      if(ok){const d=G.currentAllAnswers[p.name]&&G.currentAllAnswers[p.name][cat];pts+=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;if(G.currentUniqueMap[p.name]&&G.currentUniqueMap[p.name][cat])pts+=1;}
     });
     h+=`<td><span style="background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">+${pts}</span></td>`;
   });
@@ -794,85 +800,51 @@ const renderResultsTable=(s)=>{
   e('restbl').innerHTML=h;
 };
 
-const dispute=async(playerName,cat,newVal)=>{
+const dispute=(playerName,cat,newVal)=>{
   if(!G.isHost)return;
-  const key=`${playerName}|${cat}`;
-  disputeOverrides[key]=newVal;
-
-  // Recalculate scores
-  const newScores={...G.scores};
-  const baseResults=G.results;
-  const aa=G.currentAllAnswers;
-  const um=G.currentUniqueMap;
-
-  // Recalculate all players from scratch for this round
+  disputeOverrides[`${playerName}|${cat}`]=newVal;
+  renderResultsTable({round:G.round,letter:G.letter});
+  // Update scoreboard with disputes applied
+  const adjScores={};
   G.players.forEach(p=>{
-    let roundPts=0;
+    let base=G.scores[p.name]||0;
+    // Calculate original round pts
+    let origRound=0,newRound=0;
     G.selCats.forEach(c=>{
-      const k=`${p.name}|${c}`;
-      const ok=disputeOverrides.hasOwnProperty(k)?disputeOverrides[k]:(baseResults[p.name]||{})[c];
-      if(ok){const d=aa[p.name]&&aa[p.name][c];roundPts+=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;if(um[p.name]&&um[p.name][c])roundPts+=1;}
-    });
-    // We need to know previous rounds score — approximate by taking current total minus current round
-    // Store round score separately
-  });
-
-  // Simpler: just re-render the table with updated dispute state
-  renderResultsTable({round:G.round,letter:G.letter,allAnswers:aa,results:baseResults,uniqueMap:um});
-  renderDisputedScores();
-};
-
-const renderDisputedScores=()=>{
-  const aa=G.currentAllAnswers;
-  const baseResults=G.results;
-  const um=G.currentUniqueMap;
-  // For scoreboard, use original cumulative scores adjusted for disputes
-  const adjustedScores={};
-  G.players.forEach(p=>{
-    let originalRoundPts=0;
-    let newRoundPts=0;
-    G.selCats.forEach(c=>{
-      const baseOk=(baseResults[p.name]||{})[c];
-      const d=aa[p.name]&&aa[p.name][c];
-      const basePts=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;
-      const uPts=um[p.name]&&um[p.name][c]?1:0;
-      if(baseOk){originalRoundPts+=basePts+uPts;}
+      const baseOk=(G.results[p.name]||{})[c];
+      const d=G.currentAllAnswers[p.name]&&G.currentAllAnswers[p.name][c];
+      const bp=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;
+      const up=G.currentUniqueMap[p.name]&&G.currentUniqueMap[p.name][c]?1:0;
+      if(baseOk)origRound+=bp+up;
       const key=`${p.name}|${c}`;
-      const newOk=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:baseOk;
-      if(newOk){newRoundPts+=basePts+uPts;}
+      const nowOk=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:baseOk;
+      if(nowOk)newRound+=bp+up;
     });
-    const diff=newRoundPts-originalRoundPts;
-    adjustedScores[p.name]=(G.scores[p.name]||0)+diff;
+    adjScores[p.name]=base-origRound+newRound;
   });
-  renderBoard('scoreboard',G.players,adjustedScores);
+  renderBoard('scoreboard',G.players,adjScores);
 };
 
 const nextRound=async()=>{
   stopPolling();
-  // Apply dispute overrides to final scores before moving on
-  if(G.isHost&&Object.keys(disputeOverrides).length>0){
-    const aa=G.currentAllAnswers;const baseResults=G.results;const um=G.currentUniqueMap;
-    const newScores={};
+  // Apply disputes to scores
+  if(Object.keys(disputeOverrides).length>0){
     G.players.forEach(p=>{
-      let roundDiff=0;
+      let origRound=0,newRound=0;
       G.selCats.forEach(c=>{
+        const baseOk=(G.results[p.name]||{})[c];
+        const d=G.currentAllAnswers[p.name]&&G.currentAllAnswers[p.name][c];
+        const bp=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;
+        const up=G.currentUniqueMap[p.name]&&G.currentUniqueMap[p.name][c]?1:0;
+        if(baseOk)origRound+=bp+up;
         const key=`${p.name}|${c}`;
-        if(disputeOverrides.hasOwnProperty(key)){
-          const baseOk=(baseResults[p.name]||{})[c];
-          const d=aa[p.name]&&aa[p.name][c];
-          const basePts=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;
-          const uPts=um[p.name]&&um[p.name][c]?1:0;
-          const wasOk=baseOk;const nowOk=disputeOverrides[key];
-          if(!wasOk&&nowOk)roundDiff+=basePts+uPts;
-          if(wasOk&&!nowOk)roundDiff-=basePts+uPts;
-        }
+        const nowOk=disputeOverrides.hasOwnProperty(key)?disputeOverrides[key]:baseOk;
+        if(nowOk)newRound+=bp+up;
       });
-      newScores[p.name]=(G.scores[p.name]||0)+roundDiff;
-      G.scores[p.name]=newScores[p.name];
+      G.scores[p.name]=(G.scores[p.name]||0)-origRound+newRound;
       sb.from('players').update({score:G.scores[p.name]}).eq('room_id',G.roomId).eq('name',p.name);
     });
   }
-
   if(G.round<G.totalRounds){
     await sb.from('players').update({ready:false,answers:{}}).eq('room_id',G.roomId);
     await doNextRound();
@@ -912,7 +884,7 @@ const buildSummary=()=>{
     h+=`<thead><tr><th>קטגוריה</th>${G.players.map(p=>`<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
     G.selCats.forEach(cat=>{
       h+=`<tr><td style="font-weight:700;font-size:12px">${cat}</td>`;
-      G.players.forEach(p=>{const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';const ok=(res[p.name]||{})[cat];const basePts=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;if(!a)h+=`<td class="mut">—</td>`;else h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span>${ok?' '+ptsLabel(basePts):''}</td>`;});
+      G.players.forEach(p=>{const d=aa[p.name]&&aa[p.name][cat];const a=d?d.ans||'':'';const ok=(res[p.name]||{})[cat];const bp=d&&d.tleft>0?calcPts(d.tleft,G.tlimit):1;if(!a)h+=`<td class="mut">—</td>`;else h+=`<td>${a} <span class="${ok?'ok':'no'}">${ok?'✓':'✗'}</span>${ok?' '+ptsLabel(bp):''}</td>`;});
       h+='</tr>';
     });
     h+='</tbody></table></div></div>';return h;
@@ -922,7 +894,7 @@ const buildSummary=()=>{
 const playAgain=async()=>{
   G.round=0;G.scores={};G.allRoundsData=[];currentPhase='lobby';disputeOverrides={};
   G.players.forEach(p=>G.scores[p.name]=0);
-  allCats=defaultCats();G.selCats=allCats.slice(0,4);catKnowledge={};
+  allCats=defaultCats();G.selCats=allCats.slice(0,4);catKnowledge={};customCats=new Set();
   await sb.from('players').update({ready:false,answers:{},score:0}).eq('room_id',G.roomId);
   await sb.from('rooms').update({state:{phase:'lobby',round:0,letter:'',selCats:G.selCats,totalRounds:3,tlimit:60,results:{},scores:{},lang,allAnswers:{},uniqueMap:{},catKnowledge:{}}}).eq('id',G.roomId);
   enterLobby();
