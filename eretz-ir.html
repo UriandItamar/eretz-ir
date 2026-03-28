@@ -601,13 +601,19 @@ Answers:
 ${JSON.stringify(toCheck)}`;
 
   let results={};
+  let aiWorked=false;
   try{
     const res=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})});
     const d=await res.json();
+    if(d.error){throw new Error(d.error.message);}
     const txt=d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
-    results=JSON.parse(txt).results||{};
+    const parsed=JSON.parse(txt);
+    results=parsed.results||{};
+    aiWorked=Object.keys(results).length>0;
   }catch(err){
-    // Fallback: check first letter, accept Hebrew equivalents and common English misspellings
+    console.warn('AI fallback:',err);
+  }
+  if(!aiWorked){
     players.forEach(p=>{
       results[p.name]={};
       G.selCats.forEach(cat=>{
@@ -615,9 +621,7 @@ ${JSON.stringify(toCheck)}`;
         if(!a||a.length<2){results[p.name][cat]=false;return;}
         const first=a[0].toLowerCase();
         const expected=G.letter.toLowerCase();
-        // For Hebrew: check equiv group
         if(lang==='he'){results[p.name][cat]=equivGroup.map(l=>l.toLowerCase()).includes(first);}
-        // For English: just check first letter matches
         else{results[p.name][cat]=first===expected;}
       });
     });
